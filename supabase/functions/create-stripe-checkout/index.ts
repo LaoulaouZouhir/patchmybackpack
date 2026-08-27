@@ -29,6 +29,8 @@ Deno.serve(async (req: Request) => {
       bidderEmail,
       bidderTwitter,
       originUrl,
+      datafast_visitor_id,
+      datafast_session_id,
     } = await req.json();
 
     if (!spotId || !brandName || !websiteUrl || !bidderEmail || !depositAmount) {
@@ -39,6 +41,26 @@ Deno.serve(async (req: Request) => {
     }
 
     const host = originUrl || "http://localhost:3000";
+
+    // Build Stripe session metadata including DataFast attribution cookies
+    const sessionMetadata: Record<string, string> = {
+      spotId: String(spotId),
+      spotLabel: String(spotLabel),
+      brandName: String(brandName),
+      websiteUrl: String(websiteUrl),
+      logoUrl: String(logoUrl || ""),
+      bidAmount: String(bidAmount),
+      depositAmount: String(depositAmount),
+      bidderEmail: String(bidderEmail),
+      bidderTwitter: String(bidderTwitter || ""),
+    };
+
+    if (datafast_visitor_id) {
+      sessionMetadata.datafast_visitor_id = String(datafast_visitor_id);
+    }
+    if (datafast_session_id) {
+      sessionMetadata.datafast_session_id = String(datafast_session_id);
+    }
 
     // Create Stripe Checkout Session for 20% Refundable Deposit
     const session = await stripe.checkout.sessions.create({
@@ -60,17 +82,7 @@ Deno.serve(async (req: Request) => {
       mode: "payment",
       success_url: `${host}/?bid_success=true&spot_id=${spotId}&brand=${encodeURIComponent(brandName)}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${host}/?bid_cancelled=true`,
-      metadata: {
-        spotId: String(spotId),
-        spotLabel: String(spotLabel),
-        brandName: String(brandName),
-        websiteUrl: String(websiteUrl),
-        logoUrl: String(logoUrl || ""),
-        bidAmount: String(bidAmount),
-        depositAmount: String(depositAmount),
-        bidderEmail: String(bidderEmail),
-        bidderTwitter: String(bidderTwitter || ""),
-      },
+      metadata: sessionMetadata,
     });
 
     return new Response(

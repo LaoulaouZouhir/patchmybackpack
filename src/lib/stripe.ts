@@ -27,14 +27,29 @@ export interface CheckoutDepositParams {
 }
 
 /**
+ * Helper to read cookie values from document.cookie
+ */
+function getCookie(name: string): string | undefined {
+  if (typeof document === 'undefined') return undefined;
+  const match = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'));
+  return match ? decodeURIComponent(match[1]) : undefined;
+}
+
+/**
  * Creates a Stripe Checkout Session for the 20% refundable deposit and redirects
+ * Includes DataFast visitor & session cookies for automatic revenue attribution
  */
 export async function redirectToStripeCheckout(params: CheckoutDepositParams): Promise<{ success: boolean; error?: string }> {
   try {
+    const datafast_visitor_id = getCookie('datafast_visitor_id');
+    const datafast_session_id = getCookie('datafast_session_id');
+
     const { data, error } = await supabase.functions.invoke('create-stripe-checkout', {
       body: {
         ...params,
         originUrl: window.location.origin,
+        datafast_visitor_id,
+        datafast_session_id,
       },
     });
 
