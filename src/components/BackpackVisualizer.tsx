@@ -400,12 +400,28 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                 style={{ perspective: '800px' }}
                 className="relative w-full max-w-[380px] sm:max-w-[420px] aspect-[4/5] flex items-center justify-center select-none"
               >
-                {/* Backpack Image */}
+                {/* 2D Backpack Image (Always pre-rendered in DOM) */}
                 <img
-                  src={viewMode === '2d' ? '/backpack-2d.png' : '/backpack-3d.png'}
-                  alt="Patch My Backpack visual model"
-                  className="w-full h-full object-contain select-none transition-all duration-300 rounded-2xl pointer-events-none drop-shadow-sm"
+                  src="/backpack-2d.png"
+                  alt="Patch My Backpack 2D model"
+                  className={`absolute inset-0 w-full h-full object-contain select-none transition-opacity duration-300 rounded-2xl pointer-events-none drop-shadow-sm ${
+                    viewMode === '2d' ? 'opacity-100' : 'opacity-0'
+                  }`}
                   draggable={false}
+                  loading="eager"
+                  decoding="sync"
+                />
+
+                {/* 3D Backpack Image (Always pre-rendered in DOM) */}
+                <img
+                  src="/backpack-3d.png"
+                  alt="Patch My Backpack 3D model"
+                  className={`absolute inset-0 w-full h-full object-contain select-none transition-opacity duration-300 rounded-2xl pointer-events-none drop-shadow-sm ${
+                    viewMode === '3d' ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  draggable={false}
+                  loading="eager"
+                  decoding="sync"
                 />
 
                 {/* Optional Ghost 2D Blueprint Guide Overlay */}
@@ -413,7 +429,7 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                   <img
                     src="/backpack-2d.png"
                     alt="2D Blueprint Ghost Guide"
-                    className="absolute inset-0 w-full h-full object-contain opacity-35 mix-blend-multiply pointer-events-none transition-opacity"
+                    className="absolute inset-0 w-full h-full object-contain opacity-35 mix-blend-multiply pointer-events-none transition-opacity duration-300"
                   />
                 )}
 
@@ -445,7 +461,7 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                           transform,
                           transformOrigin: 'center center',
                         }}
-                        className={`group absolute flex flex-col items-center justify-center rounded-xl transition-all ${
+                        className={`group absolute flex flex-col items-center justify-center rounded-xl transition-all duration-300 ease-out ${
                           isCalibrating
                             ? isSelected
                               ? 'border-2 border-accent-blue bg-accent-blue/20 shadow-md cursor-move z-30 ring-2 ring-accent-blue/30'
