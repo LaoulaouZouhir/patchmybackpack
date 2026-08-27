@@ -840,10 +840,11 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                         </p>
                       </div>
 
-                      {/* Current Sponsor & Outbid / Claim Button */}
-                      <div className="pt-2 border-t border-hairline flex items-center justify-between gap-4">
-                        <div className="min-w-0">
-                          <span className="text-[11px] text-ink-subtle block">
+                      {/* Current Sponsor & Outbid / Claim Button (Stacked Rows) */}
+                      <div className="pt-3 border-t border-hairline space-y-3">
+                        {/* Sponsor Link Card */}
+                        <div className="rounded-xl bg-surface-100 p-3 border border-hairline/80">
+                          <span className="text-[11px] text-ink-subtle block font-medium">
                             {activeSpot.bidCount > 0 ? 'Held by' : 'Spot status'}
                           </span>
                           {activeSpot.bidCount > 0 && activeSpot.topBidder.brand ? (
@@ -851,37 +852,38 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                               href={activeSpot.topBidder.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-ink hover:text-cognac transition-colors truncate mt-0.5"
+                              className="inline-flex items-center gap-2 text-[14px] font-semibold text-ink hover:text-cognac transition-colors truncate mt-1 group"
                             >
                               {(activeSpot.topBidder.logo || getFaviconFromUrl(activeSpot.topBidder.url)) && (
                                 <img
                                   src={activeSpot.topBidder.logo || getFaviconFromUrl(activeSpot.topBidder.url)}
                                   alt={activeSpot.topBidder.brand}
-                                  className="h-4 w-4 rounded object-contain shrink-0"
+                                  className="h-4.5 w-4.5 rounded object-contain shrink-0"
                                   onError={(e) => { e.currentTarget.style.display = 'none'; }}
                                 />
                               )}
-                              <span className="truncate">{activeSpot.topBidder.brand}</span>
+                              <span className="truncate group-hover:underline">{activeSpot.topBidder.brand}</span>
                               <ExternalLink className="h-3 w-3 text-ink-subtle shrink-0" />
                             </a>
                           ) : (
-                            <span className="text-[13.5px] font-semibold text-accent-green">
+                            <span className="text-[13.5px] font-semibold text-accent-green block mt-0.5">
                               Open for bidding
                             </span>
                           )}
                         </div>
 
+                        {/* Full-width Outbid / Claim Action Button */}
                         <button
                           type="button"
                           onClick={() => onBidSpot(activeSpot)}
-                          className="shrink-0 rounded-full bg-ink px-5 py-2.5 text-[13px] font-medium text-white transition-opacity hover:opacity-85 cursor-pointer shadow-subtle flex items-center gap-1.5"
+                          className="w-full rounded-full bg-ink py-3 px-5 text-[13.5px] font-semibold text-white transition-all hover:bg-neutral-800 active:scale-[0.99] cursor-pointer shadow-sm flex items-center justify-center gap-2"
                         >
                           <span>
                             {activeSpot.bidCount > 0
                               ? `Outbid (${formatPrice(activeSpot.currentBid + 10)})`
                               : `Claim Spot (${formatPrice(activeSpot.startingBid)})`}
                           </span>
-                          <ArrowUpRight className="h-3.5 w-3.5" />
+                          <ArrowUpRight className="h-4 w-4" />
                         </button>
                       </div>
                     </>
