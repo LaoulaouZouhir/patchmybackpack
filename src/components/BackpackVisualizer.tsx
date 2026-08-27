@@ -859,36 +859,35 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                       </div>
 
                       {/* Current Sponsor & Outbid / Claim Button (Stacked Rows) */}
-                      <div className="pt-3 border-t border-hairline space-y-3">
-                        {/* Sponsor Link Card */}
-                        <div className="rounded-xl bg-surface-100 p-3 border border-hairline/80">
-                          <span className="text-[11px] text-ink-subtle block font-medium">
-                            {activeSpot.bidCount > 0 ? 'Held by' : 'Spot status'}
-                          </span>
-                          {activeSpot.bidCount > 0 && activeSpot.topBidder.brand ? (
-                            <a
-                              href={activeSpot.topBidder.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 text-[14px] font-semibold text-ink hover:text-cognac transition-colors truncate mt-1 group"
-                            >
+                      <div className="pt-3 border-t border-hairline space-y-2.5">
+                        {/* Compact Sponsor Pill */}
+                        {activeSpot.bidCount > 0 && activeSpot.topBidder.brand ? (
+                          <a
+                            href={activeSpot.topBidder.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full rounded-full bg-surface-100 hover:bg-surface-200 border border-hairline px-4 py-2.5 flex items-center justify-between text-[13px] font-medium text-ink transition-colors group cursor-pointer"
+                          >
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <span className="text-[11px] text-ink-subtle shrink-0">Held by:</span>
                               {(activeSpot.topBidder.logo || getFaviconFromUrl(activeSpot.topBidder.url)) && (
                                 <img
                                   src={activeSpot.topBidder.logo || getFaviconFromUrl(activeSpot.topBidder.url)}
                                   alt={activeSpot.topBidder.brand}
-                                  className="h-4.5 w-4.5 rounded object-contain shrink-0"
+                                  className="h-5 w-5 rounded object-contain shrink-0"
                                   onError={(e) => { e.currentTarget.style.display = 'none'; }}
                                 />
                               )}
-                              <span className="truncate group-hover:underline">{activeSpot.topBidder.brand}</span>
-                              <ExternalLink className="h-3 w-3 text-ink-subtle shrink-0" />
-                            </a>
-                          ) : (
-                            <span className="text-[13.5px] font-semibold text-accent-green block mt-0.5">
-                              Open for bidding
-                            </span>
-                          )}
-                        </div>
+                              <span className="font-semibold truncate text-ink group-hover:text-cognac">{activeSpot.topBidder.brand}</span>
+                            </div>
+                            <ExternalLink className="h-3.5 w-3.5 text-ink-subtle group-hover:text-cognac shrink-0 ml-2" />
+                          </a>
+                        ) : (
+                          <div className="w-full rounded-full bg-surface-100 border border-hairline px-4 py-2.5 flex items-center justify-between text-[13px]">
+                            <span className="text-[11px] text-ink-subtle">Spot status:</span>
+                            <span className="text-[12.5px] font-semibold text-accent-green">🟢 Open for bidding</span>
+                          </div>
+                        )}
 
                         {/* Full-width Outbid / Claim Action Button */}
                         <button
