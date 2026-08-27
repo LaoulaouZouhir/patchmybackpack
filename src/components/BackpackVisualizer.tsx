@@ -459,23 +459,29 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                       >
                         {/* Spot Content */}
                         {spot.bidCount > 0 && spot.topBidder.brand ? (
-                          <div className="flex h-full w-full flex-col items-center justify-center p-1 select-none pointer-events-none text-center bg-white/95 rounded-lg shadow-sm border border-cognac/40">
-                            <div className="flex items-center justify-center gap-1 min-w-0 max-w-full px-1">
-                              {(spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)) && (
+                          <div className="flex h-full w-full flex-col items-center justify-center p-1.5 select-none pointer-events-none text-center bg-white/95 rounded-xl shadow-sm border border-cognac/40 overflow-hidden">
+                            {(spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)) ? (
+                              <div className="flex flex-col items-center justify-center h-full w-full">
                                 <img
                                   src={spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)}
                                   alt={spot.topBidder.brand}
-                                  className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 rounded object-contain"
+                                  className="h-7 w-7 sm:h-8 sm:w-8 max-h-[65%] max-w-[75%] object-contain rounded drop-shadow-sm"
                                   onError={(e) => { e.currentTarget.style.display = 'none'; }}
                                 />
-                              )}
-                              <span className="text-[10px] sm:text-[11px] font-bold text-ink truncate">
-                                {spot.topBidder.brand}
-                              </span>
-                            </div>
-                            <span className="text-[8.5px] sm:text-[9.5px] font-semibold tabular-nums text-cognac mt-0.5">
-                              {formatPrice(spot.currentBid)}
-                            </span>
+                                <span className="text-[8.5px] sm:text-[9.5px] font-semibold tabular-nums text-cognac mt-0.5 leading-tight">
+                                  {formatPrice(spot.currentBid)}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="flex flex-col items-center justify-center h-full w-full">
+                                <span className="text-[10px] sm:text-[11px] font-bold text-ink truncate px-1 max-w-full">
+                                  {spot.topBidder.brand}
+                                </span>
+                                <span className="text-[8.5px] sm:text-[9.5px] font-semibold tabular-nums text-cognac mt-0.5">
+                                  {formatPrice(spot.currentBid)}
+                                </span>
+                              </div>
+                            )}
                           </div>
                         ) : (
                           <div className="flex h-full w-full flex-col items-center justify-between p-1 select-none pointer-events-none">
