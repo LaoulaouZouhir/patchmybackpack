@@ -222,7 +222,7 @@ export function App() {
         </p>
 
         {/* Funding Progress Widget */}
-        <div className="mx-auto mt-2 sm:mt-2.5 max-w-sm px-2">
+        <div className="mx-auto mt-1.5 sm:mt-2 max-w-sm px-2">
           
           {/* Metric Stats Header */}
           <div className="flex items-baseline justify-between px-1 mb-1">
@@ -249,13 +249,13 @@ export function App() {
             ></div>
           </div>
 
-          <p className="mt-1 text-[10.5px] sm:text-[11.5px] text-ink-muted">
+          <p className="mt-0.5 text-[10.5px] sm:text-[11.5px] text-ink-muted">
             Auction ends in {timeLeft.days}d {timeLeft.hours}h {timeLeft.mins}m · outbid any spot before time runs out
           </p>
         </div>
 
         {/* Interactive Backpack Hotspots Canvas */}
-        <div className="mt-2.5 sm:mt-3">
+        <div className="mt-1 sm:mt-1.5">
           <BackpackVisualizer
             spots={spots}
             selectedSpotId={selectedSpot?.id || null}

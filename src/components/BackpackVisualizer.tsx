@@ -383,19 +383,20 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
 
       {/* Main Backpack Showcase Stage */}
       <div className="relative mx-auto w-full max-w-[360px] sm:max-w-[440px] md:max-w-[490px] lg:max-w-[530px]">
-        <div className="relative w-full rounded-2xl sm:rounded-3xl bg-gradient-to-b from-surface-100/95 via-surface-100/70 to-surface-200/50 p-2 sm:p-3 border border-hairline/90 shadow-[0_15px_40px_-12px_rgba(0,0,0,0.07)]">
+        <div className="relative w-full rounded-2xl sm:rounded-3xl bg-gradient-to-b from-surface-100/95 via-surface-100/70 to-surface-200/50 p-2 sm:p-2.5 border border-hairline/90 shadow-[0_15px_40px_-12px_rgba(0,0,0,0.07)]">
           
           {/* Bag Canvas Container */}
-          <div className="relative w-full flex items-center justify-center">
-            <div
-              ref={containerRef}
-              style={{ perspective: '1000px' }}
-              className="relative w-full aspect-[768/1024] flex items-center justify-center select-none"
-            >
-              {/* 2D Backpack Image */}
-              <img
-                src="/backpack-2d.png"
-                alt="Patch My Backpack 2D model"
+          <div className="relative w-full flex items-center justify-center overflow-hidden rounded-xl">
+            <div className="relative w-full -mt-[11%] -mb-[12%]">
+              <div
+                ref={containerRef}
+                style={{ perspective: '1000px' }}
+                className="relative w-full aspect-[768/1024] flex items-center justify-center select-none"
+              >
+                {/* 2D Backpack Image */}
+                <img
+                  src="/backpack-2d.png"
+                  alt="Patch My Backpack 2D model"
                 className={`absolute inset-0 w-full h-full object-contain select-none transition-opacity duration-300 pointer-events-none drop-shadow-md ${
                   viewMode === '2d' ? 'opacity-100' : 'opacity-0'
                 }`}
@@ -529,6 +530,7 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
               </div>
             </div>
           </div>
+        </div>
 
           {/* Interactive Spot Quick Action Strip (Below Backpack Canvas) */}
           {activeSpot && !isCalibrating && (

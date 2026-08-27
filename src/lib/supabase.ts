@@ -39,7 +39,8 @@ export const SPOT_STARTING_PRICES: Record<number, number> = {
 
 export function mapRowToSpot(row: DatabaseSpotRow): Spot {
   const baseStartingPrice = SPOT_STARTING_PRICES[row.id] ?? Number(row.starting_bid);
-  const currentBid = row.bid_count > 0 ? Math.max(baseStartingPrice, Number(row.current_bid)) : baseStartingPrice;
+  const hasValidBid = row.bid_count > 0 && Boolean(row.top_bidder_brand && (row.top_bidder_logo || row.top_bidder_url));
+  const currentBid = hasValidBid ? Math.max(baseStartingPrice, Number(row.current_bid)) : baseStartingPrice;
 
   return {
     id: row.id,
@@ -50,12 +51,12 @@ export function mapRowToSpot(row: DatabaseSpotRow): Spot {
     dimensions: row.dimensions,
     startingBid: baseStartingPrice,
     currentBid: currentBid,
-    bidCount: row.bid_count,
+    bidCount: hasValidBid ? row.bid_count : 0,
     topBidder: {
-      brand: row.top_bidder_brand,
-      url: row.top_bidder_url,
-      logo: row.top_bidder_logo || '',
-      twitter: row.top_bidder_twitter || undefined,
+      brand: hasValidBid ? row.top_bidder_brand : '',
+      url: hasValidBid ? row.top_bidder_url : '',
+      logo: hasValidBid ? (row.top_bidder_logo || '') : '',
+      twitter: hasValidBid ? row.top_bidder_twitter : undefined,
     },
     coords2d: row.coords_2d,
     coords3d: row.coords_3d,
