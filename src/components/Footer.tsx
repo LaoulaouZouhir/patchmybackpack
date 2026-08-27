@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
                 Find me on X
               </a>{' '}
               or{' '}
-              <a href="mailto:hello@patchmybackpack.xyz" className="text-cognac hover:underline">
+              <a href="mailto:sizouhirl@gmail.com" className="text-cognac hover:underline">
                 email me
               </a>.
             </p>
