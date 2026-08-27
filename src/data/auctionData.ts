@@ -67,12 +67,12 @@ export interface ProofPhoto {
 
 export const initialCampaignGoal: CampaignGoal = {
   targetAmount: 1850,
-  totalRaised: 2160,
+  totalRaised: 0,
   currency: 'EUR',
   currencyRate: 1.08,
-  endDate: new Date(Date.now() + 11 * 24 * 60 * 60 * 1000 + 14 * 60 * 60 * 1000).toISOString(),
-  activeVisitors: 74,
-  totalViews: 18420,
+  endDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+  activeVisitors: 12,
+  totalViews: 0,
 };
 
 export const initialSpots: Spot[] = [

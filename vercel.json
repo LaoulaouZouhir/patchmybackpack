@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/datafast/:path*",
+      "destination": "https://datafa.st/api/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

@@ -17,6 +17,7 @@ import { Waitlist } from './components/Waitlist';
 import { Footer } from './components/Footer';
 import { BidModal } from './components/BidModal';
 import { AuthModal } from './components/AuthModal';
+import { LiveAnalytics } from './components/LiveAnalytics';
 
 const STORAGE_KEY = 'buymybackpack_calibrated_spots';
 
@@ -41,7 +42,7 @@ export function App() {
         if (liveSpots && liveSpots.length > 0) {
           setSpots(liveSpots);
           setSelectedSpot(liveSpots[0]);
-          const liveTotal = liveSpots.reduce((sum, s) => sum + s.currentBid, 0);
+          const liveTotal = liveSpots.reduce((sum, s) => s.bidCount > 0 ? sum + s.currentBid : sum, 0);
           setCampaign((prev) => ({ ...prev, totalRaised: liveTotal }));
         }
       } catch (err) {
@@ -93,7 +94,7 @@ export function App() {
     const unsubscribe = subscribeToSpotsRealtime((updatedSpot) => {
       setSpots((prevSpots) => {
         const next = prevSpots.map((s) => (s.id === updatedSpot.id ? updatedSpot : s));
-        const liveTotal = next.reduce((sum, s) => sum + s.currentBid, 0);
+        const liveTotal = next.reduce((sum, s) => s.bidCount > 0 ? sum + s.currentBid : sum, 0);
         setCampaign((prev) => ({ ...prev, totalRaised: liveTotal }));
         return next;
       });
@@ -164,7 +165,7 @@ export function App() {
         }
         return spot;
       });
-      const newTotal = next.reduce((acc, curr) => acc + curr.currentBid, 0);
+      const newTotal = next.reduce((acc, curr) => curr.bidCount > 0 ? acc + curr.currentBid : acc, 0);
       setCampaign((prev) => ({ ...prev, totalRaised: newTotal }));
       return next;
     });
@@ -313,6 +314,9 @@ export function App() {
 
       {/* Proof of Travel / It Never Leaves My Shoulders */}
       <ProofOfTravel />
+
+      {/* Live Verified Audience & DataFast Analytics */}
+      <LiveAnalytics />
 
       {/* Leather Patches Real-World Preview */}
       <LeatherPatchesPreview onOpenBidModal={() => setIsBidModalOpen(true)} />

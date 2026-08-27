@@ -50,9 +50,16 @@ export const Navbar: React.FC<NavbarProps> = ({
         </a>
 
         {/* Center links */}
-        <div className="hidden items-center gap-5 lg:gap-6 text-[13px] font-medium text-ink-muted md:flex whitespace-nowrap">
+        <div className="hidden items-center gap-4 lg:gap-5 text-[13px] font-medium text-ink-muted md:flex whitespace-nowrap">
           <a href="#spots" className="transition-colors hover:text-ink whitespace-nowrap">Live auction</a>
           <a href="#proof" className="transition-colors hover:text-ink whitespace-nowrap">Proof of roam</a>
+          <a href="#analytics" className="transition-colors hover:text-ink flex items-center gap-1.5 whitespace-nowrap">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span>Live traffic</span>
+          </a>
           <a href="#impact" className="transition-colors hover:text-ink whitespace-nowrap">Why it works</a>
           <a href="#specs" className="transition-colors hover:text-ink whitespace-nowrap">How funds are used</a>
           <a href="#how" className="transition-colors hover:text-ink whitespace-nowrap">How it works</a>
