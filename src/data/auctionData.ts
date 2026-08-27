@@ -34,6 +34,7 @@ export interface Spot {
     brand: string;
     url: string;
     logo: string;
+    twitter?: string;
   };
   coords2d: SpotCoords;
   coords3d: SpotCoords;
@@ -83,12 +84,12 @@ export const initialSpots: Spot[] = [
     size: "L",
     dimensions: "9 × 6 cm",
     startingBid: 80,
-    currentBid: 80,
-    bidCount: 0,
+    currentBid: 420,
+    bidCount: 3,
     topBidder: {
-      brand: "",
-      url: "",
-      logo: "",
+      brand: "Stripe",
+      url: "https://stripe.com",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg",
     },
     coords2d: {
       top: "19.3%",
@@ -185,18 +186,18 @@ export const initialSpots: Spot[] = [
   },
   {
     id: 4,
-    label: "Front Pocket: Top Left (2×2 Grid)",
+    label: "Front Pocket: Top Left",
     shortLabel: "Pocket Top-Left",
-    zone: "Front Pocket (2×2 Grid)",
+    zone: "Front Pocket",
     size: "M",
     dimensions: "7 × 6 cm",
     startingBid: 100,
-    currentBid: 100,
-    bidCount: 0,
+    currentBid: 280,
+    bidCount: 2,
     topBidder: {
-      brand: "",
-      url: "",
-      logo: "",
+      brand: "Supabase",
+      url: "https://supabase.com",
+      logo: "https://assets.supabase.com/images/logos/supabase-logo-icon.png",
     },
     coords2d: {
       top: "49.5%",
@@ -221,9 +222,9 @@ export const initialSpots: Spot[] = [
   },
   {
     id: 5,
-    label: "Front Pocket: Bottom Right (2×2 Grid)",
+    label: "Front Pocket: Bottom Right",
     shortLabel: "Pocket Bottom-Right",
-    zone: "Front Pocket (2×2 Grid)",
+    zone: "Front Pocket",
     size: "M",
     dimensions: "7 × 6 cm",
     startingBid: 50,
@@ -257,18 +258,18 @@ export const initialSpots: Spot[] = [
   },
   {
     id: 6,
-    label: "Front Pocket: Top Right (2×2 Grid)",
+    label: "Front Pocket: Top Right",
     shortLabel: "Pocket Top-Right",
-    zone: "Front Pocket (2×2 Grid)",
+    zone: "Front Pocket",
     size: "M",
     dimensions: "7 × 6 cm",
     startingBid: 60,
-    currentBid: 60,
-    bidCount: 0,
+    currentBid: 220,
+    bidCount: 2,
     topBidder: {
-      brand: "",
-      url: "",
-      logo: "",
+      brand: "Expo",
+      url: "https://expo.dev",
+      logo: "https://avatars.githubusercontent.com/u/12504344?s=200&v=4",
     },
     coords2d: {
       top: "49.8%",
@@ -293,18 +294,18 @@ export const initialSpots: Spot[] = [
   },
   {
     id: 7,
-    label: "Front Pocket: Bottom Left (2×2 Grid)",
+    label: "Front Pocket: Bottom Left",
     shortLabel: "Pocket Bottom-Left",
-    zone: "Front Pocket (2×2 Grid)",
+    zone: "Front Pocket",
     size: "M",
     dimensions: "7 × 6 cm",
     startingBid: 50,
-    currentBid: 50,
-    bidCount: 0,
+    currentBid: 190,
+    bidCount: 2,
     topBidder: {
-      brand: "",
-      url: "",
-      logo: "",
+      brand: "Figma",
+      url: "https://figma.com",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
     },
     coords2d: {
       top: "62.6%",

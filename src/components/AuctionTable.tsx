@@ -78,26 +78,41 @@ export const AuctionTable: React.FC<AuctionTableProps> = ({
                       </div>
                     </td>
 
-                    {/* Held by Sponsor Link */}
+                    {/* Held by Sponsor Link & X Handle */}
                     <td className="px-5 py-4">
                       {spot.bidCount > 0 && spot.topBidder.brand ? (
-                        <a
-                          href={spot.topBidder.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 font-medium text-ink hover:text-cognac transition-colors group"
-                        >
-                          {(spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)) && (
-                            <img
-                              src={spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)}
-                              alt={spot.topBidder.brand}
-                              className="h-4 w-4 rounded object-contain shrink-0"
-                              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                            />
+                        <div className="flex flex-col gap-0.5">
+                          <a
+                            href={spot.topBidder.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 font-medium text-ink hover:text-cognac transition-colors group"
+                          >
+                            {(spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)) && (
+                              <img
+                                src={spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)}
+                                alt={spot.topBidder.brand}
+                                className="h-4 w-4 rounded object-contain shrink-0"
+                                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                              />
+                            )}
+                            <span className="font-semibold">{spot.topBidder.brand}</span>
+                            <ExternalLink className="h-3 w-3 text-ink-subtle group-hover:text-cognac" />
+                          </a>
+                          {spot.topBidder.twitter && (
+                            <a
+                              href={`https://x.com/${spot.topBidder.twitter.replace(/^@/, '')}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-[11.5px] text-ink-muted hover:text-ink transition-colors w-fit pl-6"
+                            >
+                              <svg className="h-2.5 w-2.5 fill-current shrink-0" viewBox="0 0 24 24">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                              </svg>
+                              <span>@{spot.topBidder.twitter.replace(/^@/, '')}</span>
+                            </a>
                           )}
-                          <span>{spot.topBidder.brand}</span>
-                          <ExternalLink className="h-3 w-3 text-ink-subtle group-hover:text-cognac" />
-                        </a>
+                        </div>
                       ) : (
                         <span className="text-[12.5px] font-medium text-accent-green">
                           🟢 Available
@@ -163,23 +178,38 @@ export const AuctionTable: React.FC<AuctionTableProps> = ({
 
               <div className="flex items-center justify-between border-t border-hairline pt-3">
                 {spot.bidCount > 0 && spot.topBidder.brand ? (
-                  <a
-                    href={spot.topBidder.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-medium text-[13px] text-ink hover:text-cognac"
-                  >
-                    {(spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)) && (
-                      <img
-                        src={spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)}
-                        alt={spot.topBidder.brand}
-                        className="h-4 w-4 rounded object-contain shrink-0"
-                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      />
+                  <div className="flex flex-col gap-0.5 min-w-0">
+                    <a
+                      href={spot.topBidder.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-medium text-[13px] text-ink hover:text-cognac truncate"
+                    >
+                      {(spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)) && (
+                        <img
+                          src={spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)}
+                          alt={spot.topBidder.brand}
+                          className="h-4 w-4 rounded object-contain shrink-0"
+                          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                        />
+                      )}
+                      <span className="truncate">{spot.topBidder.brand}</span>
+                      <ExternalLink className="h-3 w-3 text-ink-subtle shrink-0" />
+                    </a>
+                    {spot.topBidder.twitter && (
+                      <a
+                        href={`https://x.com/${spot.topBidder.twitter.replace(/^@/, '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[11px] text-ink-muted hover:text-ink transition-colors pl-5 truncate"
+                      >
+                        <svg className="h-2.5 w-2.5 fill-current shrink-0" viewBox="0 0 24 24">
+                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        <span>@{spot.topBidder.twitter.replace(/^@/, '')}</span>
+                      </a>
                     )}
-                    <span>{spot.topBidder.brand}</span>
-                    <ExternalLink className="h-3 w-3 text-ink-subtle" />
-                  </a>
+                  </div>
                 ) : (
                   <span className="text-[12.5px] font-medium text-accent-green">
                     🟢 Available

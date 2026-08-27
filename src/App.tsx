@@ -7,6 +7,7 @@ import { Navbar } from './components/Navbar';
 import { BackpackVisualizer } from './components/BackpackVisualizer';
 import { AuctionTable } from './components/AuctionTable';
 import { ProofOfTravel } from './components/ProofOfTravel';
+import { LeatherPatchesPreview } from './components/LeatherPatchesPreview';
 import { ExposureComparison } from './components/ExposureComparison';
 import { CraftsmanshipSpecs } from './components/CraftsmanshipSpecs';
 import { HowItWorks } from './components/HowItWorks';
@@ -157,6 +158,7 @@ export function App() {
               brand,
               url,
               logo: logo || spot.topBidder.logo,
+              twitter: twitter || spot.topBidder.twitter,
             },
           };
         }
@@ -198,35 +200,48 @@ export function App() {
       />
 
       {/* Hero Section */}
-      <header className="mx-auto max-w-5xl px-6 pt-16 pb-14 text-center md:pt-20">
+      <header className="mx-auto max-w-6xl px-4 sm:px-6 pt-14 pb-14 text-center md:pt-18">
         
-        {/* Live Visitor / Total Stats */}
-        <div className="inline-flex items-center gap-2 text-[12px] text-ink-muted mb-4 font-medium">
-          <span className="h-2 w-2 rounded-full bg-accent-green"></span>
-          <span>{campaign.activeVisitors} people visiting this site now</span>
-          <span className="text-ink-subtle">·</span>
-          <span>{campaign.totalViews.toLocaleString()} total</span>
+        {/* Live Auction Spots Taken Pill (Inspired directly by reference image) */}
+        <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3.5 py-1.5 text-[12.5px] font-medium text-emerald-800 border border-emerald-200/80 shadow-2xs mb-4">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span>Live auction — {spots.filter((s) => s.bidCount > 0).length} of {spots.length} patch spots taken</span>
         </div>
 
         {/* Hero Title */}
-        <h1 className="mt-1 text-[clamp(2.5rem,5.5vw,4.25rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
+        <h1 className="mt-1 text-[clamp(2.5rem,5.5vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
           Your brand, on my Backpack.
         </h1>
 
         {/* Subtitle */}
-        <p className="mx-auto mt-4 max-w-[60ch] text-[15px] leading-relaxed text-ink-muted sm:text-[17px]">
-          Your logo travels with me on my daily leather backpack across Asia and global tech hubs.
+        <p className="mx-auto mt-4 max-w-[60ch] text-[15px] leading-relaxed text-ink-muted sm:text-[17.5px]">
+          Your logo travels with me on a founder's best friend: the Nomad Leather Backpack.
         </p>
 
-        {/* Funding Progress Widget - Bold & Visible */}
-        <div className="mx-auto mt-8 max-w-md px-2">
-          {/* Prominent High-Contrast Progress Bar (Above Money Raised) */}
+        {/* Funding Progress Widget - Bold, Clean & Inspired by Reference Image */}
+        <div className="mx-auto mt-7 max-w-lg px-2">
+          
+          {/* Metric Stats Header */}
+          <div className="flex items-baseline justify-between px-1 mb-2">
+            <span className="text-xl sm:text-2xl font-bold tabular-nums text-emerald-600">
+              {formatPrice(campaign.totalRaised)}{' '}
+              <span className="text-[13px] font-normal text-ink-muted">raised</span>
+            </span>
+            <span className="text-[13px] font-medium text-ink-muted">
+              goal {formatPrice(campaign.targetAmount)} ({percentageFunded}%)
+            </span>
+          </div>
+
+          {/* High-Contrast Progress Bar */}
           <div
             role="progressbar"
             aria-valuenow={percentageFunded}
             aria-valuemin={0}
             aria-valuemax={100}
-            className="mb-3 h-3 w-full overflow-hidden rounded-full bg-surface-200 border border-hairline-dark/60 shadow-inner p-0.5"
+            className="h-2.5 w-full overflow-hidden rounded-full bg-surface-200 border border-hairline shadow-inner p-0.5"
           >
             <div
               className="h-full rounded-full bg-emerald-500 shadow-sm transition-all duration-700"
@@ -234,18 +249,7 @@ export function App() {
             ></div>
           </div>
 
-          {/* Metric Stats */}
-          <div className="flex items-baseline justify-between px-0.5">
-            <span className="text-2xl font-semibold tabular-nums text-emerald-600">
-              {formatPrice(campaign.totalRaised)}{' '}
-              <span className="text-[13px] font-normal text-ink-muted">raised</span>
-            </span>
-            <span className="text-[13px] text-ink-muted">
-              goal passed · <strong className="font-semibold tabular-nums text-emerald-600">{percentageFunded}%</strong>
-            </span>
-          </div>
-
-          <p className="mt-2 text-[12.5px] text-ink-muted">
+          <p className="mt-2.5 text-[12px] sm:text-[12.5px] text-ink-muted">
             Auction ends in {timeLeft.days}d {timeLeft.hours}h {timeLeft.mins}m · outbid any spot before time runs out
           </p>
         </div>
@@ -309,6 +313,9 @@ export function App() {
 
       {/* Proof of Travel / It Never Leaves My Shoulders */}
       <ProofOfTravel />
+
+      {/* Leather Patches Real-World Preview */}
+      <LeatherPatchesPreview onOpenBidModal={() => setIsBidModalOpen(true)} />
 
       {/* Why Backpack beats Laptop (Statement section) */}
       <ExposureComparison />

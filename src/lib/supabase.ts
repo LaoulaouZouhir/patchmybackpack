@@ -20,6 +20,7 @@ export interface DatabaseSpotRow {
   top_bidder_brand: string;
   top_bidder_url: string;
   top_bidder_logo: string;
+  top_bidder_twitter?: string;
   coords_2d: Spot['coords2d'];
   coords_3d: Spot['coords3d'];
   description: string;
@@ -41,6 +42,7 @@ export function mapRowToSpot(row: DatabaseSpotRow): Spot {
       brand: row.top_bidder_brand,
       url: row.top_bidder_url,
       logo: row.top_bidder_logo || '',
+      twitter: row.top_bidder_twitter || undefined,
     },
     coords2d: row.coords_2d,
     coords3d: row.coords_3d,

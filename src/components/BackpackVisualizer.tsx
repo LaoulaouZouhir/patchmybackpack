@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { Spot, SpotCoords } from '../data/auctionData';
-import { ExternalLink, ArrowUpRight, Move, Sliders, RotateCcw, Check, Copy, Box, CopyCheck, Eye, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Move, Sliders, RotateCcw, Check, Copy, Box, CopyCheck, Eye, Sparkles } from 'lucide-react';
 import { getFaviconFromUrl } from '../lib/urlUtils';
 
 interface BackpackVisualizerProps {
@@ -253,26 +253,25 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
       return s;
     });
     onUpdateSpots(updated);
-  };
-
-  return (
-    <div id="spots" className="scroll-mt-24 mx-auto max-w-5xl px-6">
-           {/* Top Controls Bar - Centered View Switcher */}
+  };  return (
+    <div id="spots" className="scroll-mt-24 mx-auto w-full max-w-5xl px-4 sm:px-6">
+      
+      {/* Top Controls Bar - Centered View Switcher */}
       <div className="flex items-center justify-center relative mb-6">
         
         {/* Prominent Centered Live Auction vs Final Look Toggle */}
         <div
           role="group"
           aria-label="Backpack view mode toggle"
-          className="flex items-center rounded-2xl bg-surface-200/90 p-1 border border-hairline shadow-sm"
+          className="flex items-center rounded-2xl bg-surface-200/90 p-1.5 border border-hairline shadow-sm"
         >
           {/* Live Auction Tab */}
           <button
             type="button"
             onClick={() => setViewMode('2d')}
-            className={`flex items-center gap-2 rounded-xl px-4 py-2 text-[13px] font-semibold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 rounded-xl px-5 py-2 text-[13.5px] font-semibold transition-all cursor-pointer ${
               viewMode === '2d'
-                ? 'bg-white text-ink shadow-[0_2px_4px_rgba(0,0,0,0.06)]'
+                ? 'bg-white text-ink shadow-[0_2px_8px_rgba(0,0,0,0.08)]'
                 : 'text-ink-muted hover:text-ink hover:bg-white/50'
             }`}
           >
@@ -287,18 +286,18 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
           <button
             type="button"
             onClick={() => setViewMode('3d')}
-            className={`flex items-center gap-2 rounded-xl px-4 py-2 text-[13px] font-semibold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 rounded-xl px-5 py-2 text-[13.5px] font-semibold transition-all cursor-pointer ${
               viewMode === '3d'
-                ? 'bg-white text-ink shadow-[0_2px_4px_rgba(0,0,0,0.06)]'
+                ? 'bg-white text-ink shadow-[0_2px_8px_rgba(0,0,0,0.08)]'
                 : 'text-ink-muted hover:text-ink hover:bg-white/50'
             }`}
           >
-            <Sparkles className="h-3.5 w-3.5 text-cognac" />
+            <Sparkles className="h-4 w-4 text-cognac" />
             <span>Final Look</span>
           </button>
         </div>
 
-        {/* Calibration Mode Toggle & Tools (Hidden by default for visitors, pinned right when enabled) */}
+        {/* Calibration Mode Toggle & Tools (Hidden by default, enabled via Shift+C or ?calibrate=true) */}
         {canCalibrate && (
           <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-2">
             <button
@@ -311,25 +310,23 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
               }`}
             >
               <Move className="h-3.5 w-3.5" />
-              <span>{isCalibrating ? `Exit Calibration (${viewMode === '2d' ? 'Live Auction' : 'Final Look'})` : `✏️ Calibrate Spots`}</span>
+              <span>{isCalibrating ? `Exit Calibration` : `✏️ Calibrate Spots`}</span>
             </button>
 
             {isCalibrating && (
               <>
-                {/* Match 2D Button (Visible in 3D Mode) */}
                 {viewMode === '3d' && (
                   <button
                     type="button"
                     onClick={handleMatchAllFrom2D}
                     className="flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1.5 text-[12px] font-semibold text-accent-blue border border-blue-200 hover:bg-blue-100 transition-colors cursor-pointer shadow-subtle"
-                    title="Copy all spot positions and sizes from Live Auction to Final Look"
+                    title="Copy all spot positions from 2D"
                   >
                     <CopyCheck className="h-3.5 w-3.5" />
                     <span>Match 2D</span>
                   </button>
                 )}
 
-                {/* Ghost 2D Overlay Guide Toggle */}
                 {viewMode === '3d' && (
                   <button
                     type="button"
@@ -339,7 +336,7 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                         ? 'bg-ink text-white border-ink'
                         : 'bg-white text-ink-muted border-hairline hover:text-ink'
                     }`}
-                    title="Overlay translucent 2D blueprint guide for visual alignment"
+                    title="Overlay translucent 2D blueprint guide"
                   >
                     <Eye className="h-3.5 w-3.5" />
                     <span>Ghost 2D</span>
@@ -352,7 +349,7 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                   className="flex items-center gap-1 rounded-full bg-white px-3 py-1.5 text-[12px] font-medium text-ink border border-hairline hover:bg-surface-100 transition-colors cursor-pointer"
                 >
                   {copied ? <Check className="h-3.5 w-3.5 text-accent-green" /> : <Copy className="h-3.5 w-3.5" />}
-                  <span>{copied ? 'Copied JSON!' : 'Copy Coords'}</span>
+                  <span>{copied ? 'Copied!' : 'Copy'}</span>
                 </button>
 
                 <button
@@ -371,550 +368,462 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
       </div>
 
       {canCalibrate && isCalibrating && (
-        <div className="mb-4 rounded-xl bg-amber-50 p-3 text-xs text-amber-900 border border-amber-200/70 text-left flex items-center justify-between">
+        <div className="mb-6 rounded-2xl bg-amber-50 p-4 text-xs text-amber-900 border border-amber-200/80 text-left flex items-center justify-between shadow-xs">
           <p>
             🖐️ <strong>Calibrating {viewMode === '2d' ? 'Live Auction (2D)' : 'Final Look (3D)'} View:</strong>{' '}
-            {viewMode === '3d'
-              ? 'Click "Match 2D" to copy all 2D positions as your starting point, then fine-tune with the 3D bend sliders.'
-              : 'Drag any spot or resize corner. Switch to Final Look anytime to calibrate both perspectives.'}
+            Drag any spot or resize corner. Switch perspectives anytime.
           </p>
           {matchedNotification && (
-            <span className="shrink-0 font-semibold text-accent-blue bg-blue-100/80 px-2 py-0.5 rounded-lg text-[11px]">
+            <span className="shrink-0 font-semibold text-accent-blue bg-blue-100/80 px-2.5 py-1 rounded-lg text-[11px]">
               {matchedNotification}
             </span>
           )}
         </div>
       )}
 
-      {/* Backpack Stage / Canvas Container */}
-      <div className="relative mx-auto max-w-4xl">
-        <div className="relative w-full rounded-3xl bg-surface-100/60 p-4 sm:p-8 border border-hairline/80 shadow-float">
+      {/* Main Big Backpack Showcase Stage (Centered, Large Scale inspired by MacBook Preview) */}
+      <div className="relative mx-auto w-full max-w-[620px] sm:max-w-[700px] lg:max-w-[760px] xl:max-w-[800px]">
+        <div className="relative w-full rounded-[2.25rem] sm:rounded-[3rem] bg-gradient-to-b from-surface-100/95 via-surface-100/70 to-surface-200/50 p-4 sm:p-7 md:p-9 border border-hairline/90 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.07)]">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left: Bag Canvas with 3D Perspective Transform */}
-            <div className="lg:col-span-7 flex flex-col items-center justify-center">
-              
-              <div
-                ref={containerRef}
-                style={{ perspective: '800px' }}
-                className="relative w-full max-w-[380px] sm:max-w-[420px] aspect-[4/5] flex items-center justify-center select-none"
-              >
-                {/* 2D Backpack Image (Always pre-rendered in DOM) */}
+          {/* Bag Canvas Container */}
+          <div className="relative w-full flex items-center justify-center">
+            <div
+              ref={containerRef}
+              style={{ perspective: '1000px' }}
+              className="relative w-full aspect-[768/1024] flex items-center justify-center select-none"
+            >
+              {/* 2D Backpack Image */}
+              <img
+                src="/backpack-2d.png"
+                alt="Patch My Backpack 2D model"
+                className={`absolute inset-0 w-full h-full object-contain select-none transition-opacity duration-300 pointer-events-none drop-shadow-md ${
+                  viewMode === '2d' ? 'opacity-100' : 'opacity-0'
+                }`}
+                draggable={false}
+                loading="eager"
+                decoding="sync"
+              />
+
+              {/* 3D Backpack Image */}
+              <img
+                src="/backpack-3d.png"
+                alt="Patch My Backpack 3D model"
+                className={`absolute inset-0 w-full h-full object-contain select-none transition-opacity duration-300 pointer-events-none drop-shadow-md ${
+                  viewMode === '3d' ? 'opacity-100' : 'opacity-0'
+                }`}
+                draggable={false}
+                loading="eager"
+                decoding="sync"
+              />
+
+              {/* Optional Ghost 2D Blueprint Guide Overlay */}
+              {viewMode === '3d' && showGhostOverlay && (
                 <img
                   src="/backpack-2d.png"
-                  alt="Patch My Backpack 2D model"
-                  className={`absolute inset-0 w-full h-full object-contain select-none transition-opacity duration-300 rounded-2xl pointer-events-none drop-shadow-sm ${
-                    viewMode === '2d' ? 'opacity-100' : 'opacity-0'
-                  }`}
-                  draggable={false}
-                  loading="eager"
-                  decoding="sync"
+                  alt="2D Blueprint Ghost Guide"
+                  className="absolute inset-0 w-full h-full object-contain opacity-35 mix-blend-multiply pointer-events-none transition-opacity duration-300"
                 />
+              )}
 
-                {/* 3D Backpack Image (Always pre-rendered in DOM) */}
-                <img
-                  src="/backpack-3d.png"
-                  alt="Patch My Backpack 3D model"
-                  className={`absolute inset-0 w-full h-full object-contain select-none transition-opacity duration-300 rounded-2xl pointer-events-none drop-shadow-sm ${
-                    viewMode === '3d' ? 'opacity-100' : 'opacity-0'
-                  }`}
-                  draggable={false}
-                  loading="eager"
-                  decoding="sync"
-                />
+              {/* Hotspots Overlay */}
+              <div className="absolute inset-0 pointer-events-auto" style={{ transformStyle: 'preserve-3d' }}>
+                {spots.map((spot) => {
+                  const coords = getSpotCoords(spot);
+                  const isHovered = hoveredSpotId === spot.id;
+                  const isSelected = selectedSpotId === spot.id;
+                  const transform = getTransformStyle(coords);
+                  const isTaken = spot.bidCount > 0 && spot.topBidder.brand;
 
-                {/* Optional Ghost 2D Blueprint Guide Overlay */}
-                {viewMode === '3d' && showGhostOverlay && (
-                  <img
-                    src="/backpack-2d.png"
-                    alt="2D Blueprint Ghost Guide"
-                    className="absolute inset-0 w-full h-full object-contain opacity-35 mix-blend-multiply pointer-events-none transition-opacity duration-300"
-                  />
-                )}
-
-                {/* Hotspots Overlay */}
-                <div className="absolute inset-0 pointer-events-auto" style={{ transformStyle: 'preserve-3d' }}>
-                  {spots.map((spot) => {
-                    const coords = getSpotCoords(spot);
-                    const isHovered = hoveredSpotId === spot.id;
-                    const isSelected = selectedSpotId === spot.id;
-                    const transform = getTransformStyle(coords);
-
-                    return (
-                      <div
-                        key={spot.id}
-                        onMouseDown={(e) => handleMouseDown(e, spot, false)}
-                        onClick={() => {
-                          if (!isCalibrating) {
-                            onSelectSpot(spot);
-                            onBidSpot(spot);
-                          }
-                        }}
-                        onMouseEnter={() => !isCalibrating && setHoveredSpotId(spot.id)}
-                        onMouseLeave={() => !isCalibrating && setHoveredSpotId(null)}
-                        style={{
-                          top: coords.top,
-                          left: coords.left,
-                          width: coords.width,
-                          height: coords.height,
-                          transform,
-                          transformOrigin: 'center center',
-                        }}
-                        className={`group absolute flex flex-col items-center justify-center rounded-xl transition-all duration-300 ease-out ${
-                          isCalibrating
-                            ? isSelected
-                              ? 'border-2 border-cognac bg-cognac/20 shadow-md cursor-move z-30 ring-2 ring-cognac/30'
-                              : 'border-2 border-dashed border-amber-900/60 bg-amber-950/15 cursor-move z-10 hover:border-cognac hover:bg-cognac/10'
-                            : isSelected || isHovered
-                              ? spot.bidCount > 0
-                                ? 'border-2 border-cognac shadow-lg scale-105 z-20 ring-2 ring-cognac/30 cursor-pointer overflow-hidden'
-                                : 'border-2 border-cognac bg-white/40 shadow-lg scale-105 z-20 ring-2 ring-cognac/20 cursor-pointer overflow-hidden backdrop-blur-[1px]'
-                              : spot.bidCount > 0
-                                ? 'border border-dashed border-cognac/50 bg-black/5 hover:border-cognac z-10 cursor-pointer overflow-hidden'
-                                : 'border border-dashed border-ink/30 bg-white/30 hover:border-cognac hover:bg-white/50 z-10 cursor-pointer overflow-hidden'
-                        }`}
-                      >
-                        {/* Spot Content */}
-                        {spot.bidCount > 0 && spot.topBidder.brand ? (
-                          <div className="flex h-full w-full flex-col items-center justify-center p-1 select-none pointer-events-none text-center">
-                            {(spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)) ? (
-                              <div className="flex flex-col items-center justify-center h-full w-full">
-                                <img
-                                  src={spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)}
-                                  alt={spot.topBidder.brand}
-                                  className="h-8 w-8 sm:h-10 sm:w-10 max-h-[72%] max-w-[82%] object-contain drop-shadow-md transition-transform group-hover:scale-105"
-                                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                                />
-                                <span className="text-[8.5px] sm:text-[9.5px] font-semibold tabular-nums text-ink/90 mt-0.5 leading-tight bg-white/70 backdrop-blur-[1px] px-1.5 py-0.5 rounded-md shadow-xs">
-                                  {formatPrice(spot.currentBid)}
-                                </span>
-                              </div>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full w-full">
-                                <span className="text-[10px] sm:text-[11px] font-bold text-ink truncate px-1 max-w-full">
-                                  {spot.topBidder.brand}
-                                </span>
-                                <span className="text-[8.5px] sm:text-[9.5px] font-semibold tabular-nums text-cognac mt-0.5">
-                                  {formatPrice(spot.currentBid)}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        ) : (
-                          <div className="flex h-full w-full flex-col items-center justify-between p-1 select-none pointer-events-none">
-                            <span className="flex items-center justify-center min-h-0 flex-1">
-                              <span className="text-[10px] sm:text-[11px] font-semibold text-ink truncate max-w-full px-1">
-                                #{spot.id} Available
+                  return (
+                    <div
+                      key={spot.id}
+                      onMouseDown={(e) => handleMouseDown(e, spot, false)}
+                      onClick={() => {
+                        if (!isCalibrating) {
+                          onSelectSpot(spot);
+                          onBidSpot(spot);
+                        }
+                      }}
+                      onMouseEnter={() => !isCalibrating && setHoveredSpotId(spot.id)}
+                      onMouseLeave={() => !isCalibrating && setHoveredSpotId(null)}
+                      style={{
+                        top: coords.top,
+                        left: coords.left,
+                        width: coords.width,
+                        height: coords.height,
+                        transform,
+                        transformOrigin: 'center center',
+                      }}
+                      className={`group absolute flex flex-col items-center justify-center rounded-2xl transition-all duration-300 ease-out ${
+                        isCalibrating
+                          ? isSelected
+                            ? 'border-2 border-cognac bg-cognac/25 shadow-lg cursor-move z-30 ring-4 ring-cognac/30'
+                            : 'border-2 border-dashed border-amber-900/70 bg-amber-950/20 cursor-move z-10 hover:border-cognac hover:bg-cognac/15'
+                          : isSelected || isHovered
+                            ? isTaken
+                              ? 'border-2 border-neutral-900 bg-white shadow-xl scale-105 z-20 ring-4 ring-black/10 cursor-pointer overflow-hidden'
+                              : 'border-2 border-neutral-900 bg-white/80 shadow-xl scale-105 z-20 ring-4 ring-black/10 cursor-pointer overflow-hidden backdrop-blur-xs'
+                            : isTaken
+                              ? 'border border-neutral-200/90 bg-white/95 shadow-md hover:border-neutral-900 z-10 cursor-pointer overflow-hidden'
+                              : 'border-2 border-dashed border-neutral-400/60 bg-white/40 hover:border-neutral-800 hover:bg-white/60 z-10 cursor-pointer overflow-hidden backdrop-blur-[2px]'
+                      }`}
+                    >
+                      {/* Spot Content - Inspired by the clean stickers in the reference photo */}
+                      {isTaken ? (
+                        <div className="flex h-full w-full flex-col items-center justify-center p-1.5 select-none pointer-events-none text-center">
+                          {(spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)) ? (
+                            <div className="flex flex-col items-center justify-center h-full w-full">
+                              <img
+                                src={spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)}
+                                alt={spot.topBidder.brand}
+                                className="h-8 w-8 sm:h-11 sm:w-11 md:h-14 md:w-14 max-h-[64%] max-w-[82%] object-contain drop-shadow-xs transition-transform group-hover:scale-105"
+                                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                              />
+                              <span className="text-[9.5px] sm:text-[11px] md:text-[12.5px] font-bold tabular-nums text-neutral-800 mt-1 leading-tight bg-neutral-100/90 border border-neutral-200/80 px-2 py-0.5 rounded-md shadow-2xs">
+                                {formatPrice(spot.currentBid)}
                               </span>
-                            </span>
-                            <span className="text-[9px] sm:text-[10px] font-medium tabular-nums text-ink-muted">
-                              from {formatPrice(spot.startingBid)}
-                            </span>
-                          </div>
-                        )}
-
-                        {/* Resize Corner Handle */}
-                        {isCalibrating && isSelected && (
-                          <div
-                            onMouseDown={(e) => handleMouseDown(e, spot, true)}
-                            className="absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full bg-accent-blue border-2 border-white shadow-md cursor-nwse-resize z-40 hover:scale-125 transition-transform"
-                            title="Drag to resize"
-                          />
-                        )}
-
-                        {/* Hover Overlay */}
-                        {!isCalibrating && (
-                          <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 bg-black/15 backdrop-blur-[1px]">
-                            <span className="rounded-full bg-ink px-2.5 py-1 text-[11px] font-medium text-white shadow-sm">
-                              {spot.bidCount > 0 ? 'Outbid' : 'Claim Spot'}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <p className="mt-3 text-[11.5px] text-ink-subtle text-center">
-                {isCalibrating ? `Calibrating ${viewMode === '2d' ? 'Live Auction' : 'Final Look'} coordinates & surface curvature.` : 'Tap any spot on the bag to inspect details or outbid.'}
-              </p>
-
-            </div>
-
-            {/* Right: Selected Spot Inspector & 3D Bend Controls */}
-            <div className="lg:col-span-5 flex flex-col justify-between h-full bg-white rounded-2xl p-6 sm:p-7 border border-hairline shadow-subtle">
-              {activeSpot && (
-                <div className="space-y-5">
-                  
-                  {/* Spot Header */}
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="flex items-center gap-2">
-                        <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-surface-200 text-[11px] font-bold text-ink-muted">
-                          {activeSpot.id}
-                        </span>
-                        <span className="text-[12px] text-ink-muted font-medium">
-                          {activeSpot.zone} · {activeSpot.dimensions}
-                        </span>
-                      </div>
-                      <span className="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-surface-200 text-ink">
-                        Size {activeSpot.size}
-                      </span>
-                    </div>
-
-                    <h3 className="text-xl font-semibold text-ink tracking-tight">
-                      {activeSpot.label}
-                    </h3>
-                  </div>
-
-                  {/* Calibration Slider Controls */}
-                  {isCalibrating ? (
-                    <div className="space-y-3.5 p-4 rounded-xl bg-surface-100 border border-hairline text-xs">
-                      
-                      <div className="flex items-center justify-between font-semibold text-ink border-b border-hairline pb-2">
-                        <span className="flex items-center gap-1.5">
-                          <Sliders className="h-3.5 w-3.5 text-accent-blue" />
-                          <span>{viewMode === '2d' ? 'Live Auction (2D)' : 'Final Look (3D)'} Position & Size (%)</span>
-                        </span>
-                        
-                        {viewMode === '3d' && (
-                          <button
-                            type="button"
-                            onClick={() => handleMatchSpotFrom2D(activeSpot.id)}
-                            className="text-[11px] text-accent-blue font-semibold hover:underline cursor-pointer"
-                            title="Copy 2D position for this spot"
-                          >
-                            Match this from 2D
-                          </button>
-                        )}
-                      </div>
-
-                      {/* 2D Position Sliders */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <div className="flex justify-between text-[11px] text-ink-muted mb-0.5">
-                            <span>Top:</span>
-                            <span className="font-mono">{activeSpotCoords.top}</span>
-                          </div>
-                          <input
-                            type="range"
-                            min="0"
-                            max="90"
-                            step="0.5"
-                            value={parseFloat(activeSpotCoords.top) || 0}
-                            onChange={(e) => {
-                              const val = `${e.target.value}%`;
-                              const coordKey = viewMode === '3d' ? 'coords3d' : 'coords2d';
-                              onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, [coordKey]: { ...getSpotCoords(s), top: val } } : s));
-                            }}
-                            className="w-full accent-accent-blue"
-                          />
+                            </div>
+                          ) : (
+                            <div className="flex flex-col items-center justify-center h-full w-full">
+                              <span className="text-[11px] sm:text-[13px] md:text-[15px] font-bold text-ink truncate px-1 max-w-full">
+                                {spot.topBidder.brand}
+                              </span>
+                              <span className="text-[9.5px] sm:text-[11px] md:text-[12.5px] font-bold tabular-nums text-neutral-800 mt-1 bg-neutral-100/90 border border-neutral-200/80 px-2 py-0.5 rounded-md">
+                                {formatPrice(spot.currentBid)}
+                              </span>
+                            </div>
+                          )}
                         </div>
-
-                        <div>
-                          <div className="flex justify-between text-[11px] text-ink-muted mb-0.5">
-                            <span>Left:</span>
-                            <span className="font-mono">{activeSpotCoords.left}</span>
-                          </div>
-                          <input
-                            type="range"
-                            min="0"
-                            max="90"
-                            step="0.5"
-                            value={parseFloat(activeSpotCoords.left) || 0}
-                            onChange={(e) => {
-                              const val = `${e.target.value}%`;
-                              const coordKey = viewMode === '3d' ? 'coords3d' : 'coords2d';
-                              onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, [coordKey]: { ...getSpotCoords(s), left: val } } : s));
-                            }}
-                            className="w-full accent-accent-blue"
-                          />
-                        </div>
-
-                        <div>
-                          <div className="flex justify-between text-[11px] text-ink-muted mb-0.5">
-                            <span>Width:</span>
-                            <span className="font-mono">{activeSpotCoords.width}</span>
-                          </div>
-                          <input
-                            type="range"
-                            min="5"
-                            max="80"
-                            step="0.5"
-                            value={parseFloat(activeSpotCoords.width) || 10}
-                            onChange={(e) => {
-                              const val = `${e.target.value}%`;
-                              const coordKey = viewMode === '3d' ? 'coords3d' : 'coords2d';
-                              onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, [coordKey]: { ...getSpotCoords(s), width: val } } : s));
-                            }}
-                            className="w-full accent-accent-blue"
-                          />
-                        </div>
-
-                        <div>
-                          <div className="flex justify-between text-[11px] text-ink-muted mb-0.5">
-                            <span>Height:</span>
-                            <span className="font-mono">{activeSpotCoords.height}</span>
-                          </div>
-                          <input
-                            type="range"
-                            min="5"
-                            max="60"
-                            step="0.5"
-                            value={parseFloat(activeSpotCoords.height) || 10}
-                            onChange={(e) => {
-                              const val = `${e.target.value}%`;
-                              const coordKey = viewMode === '3d' ? 'coords3d' : 'coords2d';
-                              onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, [coordKey]: { ...getSpotCoords(s), height: val } } : s));
-                            }}
-                            className="w-full accent-accent-blue"
-                          />
-                        </div>
-                      </div>
-
-                      {/* 3D Bend & Skew Section (Active on 3D View) */}
-                      {viewMode === '3d' && (
-                        <div className="mt-3 pt-3 border-t border-hairline space-y-2.5">
-                          <div className="flex items-center justify-between font-semibold text-cognac">
-                            <span className="flex items-center gap-1">
-                              <Box className="h-3.5 w-3.5" />
-                              <span>3D Bend, Turn & Shear</span>
-                            </span>
-                          </div>
-
-                          {/* Quick 1-Click Angle Presets */}
-                          <div className="flex flex-wrap gap-1.5 pb-1">
-                            <button
-                              type="button"
-                              onClick={() => apply3DPreset('8deg', '-28deg', '2deg', '-4deg', '-4deg')}
-                              className="rounded-lg bg-surface-200 px-2 py-0.5 text-[10.5px] font-medium text-ink hover:bg-cognac hover:text-white transition-colors cursor-pointer"
-                            >
-                              👈 Bend Left
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => apply3DPreset('8deg', '28deg', '-2deg', '4deg', '4deg')}
-                              className="rounded-lg bg-surface-200 px-2 py-0.5 text-[10.5px] font-medium text-ink hover:bg-cognac hover:text-white transition-colors cursor-pointer"
-                            >
-                              👉 Bend Right
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => apply3DPreset('18deg', '-8deg', '0deg', '0deg', '-2deg')}
-                              className="rounded-lg bg-surface-200 px-2 py-0.5 text-[10.5px] font-medium text-ink hover:bg-cognac hover:text-white transition-colors cursor-pointer"
-                            >
-                              👇 Slant Flap
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => apply3DPreset('0deg', '0deg', '0deg', '0deg', '0deg')}
-                              className="rounded-lg bg-surface-200 px-2 py-0.5 text-[10.5px] font-medium text-ink-subtle hover:text-ink transition-colors cursor-pointer"
-                            >
-                              Reset
-                            </button>
-                          </div>
-
-                          {/* 3D Sliders Grid */}
-                          <div className="grid grid-cols-2 gap-3 pt-1">
-                            
-                            {/* Rotate Y: Turn Left / Right */}
-                            <div>
-                              <div className="flex justify-between text-[11px] text-ink-muted mb-0.5">
-                                <span>Turn Y (Left/Right):</span>
-                                <span className="font-mono text-cognac font-semibold">{activeSpotCoords.rotateY || '0deg'}</span>
-                              </div>
-                              <input
-                                type="range"
-                                min="-65"
-                                max="65"
-                                step="1"
-                                value={parseInt(activeSpotCoords.rotateY || '0', 10)}
-                                onChange={(e) => {
-                                  const val = `${e.target.value}deg`;
-                                  onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, coords3d: { ...getSpotCoords(s), rotateY: val } } : s));
-                                }}
-                                className="w-full accent-cognac"
-                              />
-                            </div>
-
-                            {/* Rotate X: Tilt Up / Down */}
-                            <div>
-                              <div className="flex justify-between text-[11px] text-ink-muted mb-0.5">
-                                <span>Tilt X (Up/Down):</span>
-                                <span className="font-mono text-cognac font-semibold">{activeSpotCoords.rotateX || '0deg'}</span>
-                              </div>
-                              <input
-                                type="range"
-                                min="-60"
-                                max="60"
-                                step="1"
-                                value={parseInt(activeSpotCoords.rotateX || '0', 10)}
-                                onChange={(e) => {
-                                  const val = `${e.target.value}deg`;
-                                  onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, coords3d: { ...getSpotCoords(s), rotateX: val } } : s));
-                                }}
-                                className="w-full accent-cognac"
-                              />
-                            </div>
-
-                            {/* Skew X: Horizontal Shear */}
-                            <div>
-                              <div className="flex justify-between text-[11px] text-ink-muted mb-0.5">
-                                <span>Skew X (Horizontal):</span>
-                                <span className="font-mono text-cognac font-semibold">{activeSpotCoords.skewX || '0deg'}</span>
-                              </div>
-                              <input
-                                type="range"
-                                min="-45"
-                                max="45"
-                                step="1"
-                                value={parseInt(activeSpotCoords.skewX || '0', 10)}
-                                onChange={(e) => {
-                                  const val = `${e.target.value}deg`;
-                                  onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, coords3d: { ...getSpotCoords(s), skewX: val } } : s));
-                                }}
-                                className="w-full accent-cognac"
-                              />
-                            </div>
-
-                            {/* Skew Y: Vertical Shear */}
-                            <div>
-                              <div className="flex justify-between text-[11px] text-ink-muted mb-0.5">
-                                <span>Skew Y (Vertical):</span>
-                                <span className="font-mono text-cognac font-semibold">{activeSpotCoords.skewY || '0deg'}</span>
-                              </div>
-                              <input
-                                type="range"
-                                min="-45"
-                                max="45"
-                                step="1"
-                                value={parseInt(activeSpotCoords.skewY || '0', 10)}
-                                onChange={(e) => {
-                                  const val = `${e.target.value}deg`;
-                                  onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, coords3d: { ...getSpotCoords(s), skewY: val } } : s));
-                                }}
-                                className="w-full accent-cognac"
-                              />
-                            </div>
-
-                            {/* Rotate Z: Angle */}
-                            <div className="col-span-2">
-                              <div className="flex justify-between text-[11px] text-ink-muted mb-0.5">
-                                <span>Rotate Z (Angle Twist):</span>
-                                <span className="font-mono text-cognac font-semibold">{activeSpotCoords.rotateZ || '0deg'}</span>
-                              </div>
-                              <input
-                                type="range"
-                                min="-45"
-                                max="45"
-                                step="1"
-                                value={parseInt(activeSpotCoords.rotateZ || '0', 10)}
-                                onChange={(e) => {
-                                  const val = `${e.target.value}deg`;
-                                  onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, coords3d: { ...getSpotCoords(s), rotateZ: val } } : s));
-                                }}
-                                className="w-full accent-cognac"
-                              />
-                            </div>
-
-                          </div>
+                      ) : (
+                        /* Open Spot (Clean layout matching "LARGE from 500 €" in reference photo) */
+                        <div className="flex h-full w-full flex-col items-center justify-center p-1 select-none pointer-events-none text-center">
+                          <span className="text-[9.5px] sm:text-[11px] md:text-[12.5px] font-bold uppercase tracking-wider text-neutral-600 truncate max-w-full">
+                            {spot.size === 'L' ? 'LARGE' : spot.size === 'XL' ? 'XL SPOT' : spot.size === 'S' ? 'SMALL' : 'MEDIUM'}
+                          </span>
+                          <span className="text-[9px] sm:text-[10.5px] md:text-[12px] font-medium tabular-nums text-neutral-500 mt-0.5">
+                            from {formatPrice(spot.startingBid)}
+                          </span>
                         </div>
                       )}
 
+                      {/* Resize Corner Handle (Calibration Mode) */}
+                      {isCalibrating && isSelected && (
+                        <div
+                          onMouseDown={(e) => handleMouseDown(e, spot, true)}
+                          className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-accent-blue border-2 border-white shadow-md cursor-nwse-resize z-40 hover:scale-125 transition-transform"
+                          title="Drag to resize"
+                        />
+                      )}
+
+                      {/* Hover Overlay */}
+                      {!isCalibrating && (
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 bg-black/20 backdrop-blur-[1px]">
+                          <span className="rounded-full bg-ink px-3 py-1 text-[11.5px] font-semibold text-white shadow-md">
+                            {isTaken ? 'Outbid' : 'Claim Spot'}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    <>
-                      {/* Price & Bid Stats */}
-                      <div className="flex items-baseline justify-between border-y border-hairline py-4">
-                        <div>
-                          <span className="text-[12px] text-ink-muted block">
-                            {activeSpot.bidCount > 0 ? 'Current top bid' : 'Starting price'}
-                          </span>
-                          <span className="text-2xl font-semibold tabular-nums text-ink">
-                            {formatPrice(activeSpot.bidCount > 0 ? activeSpot.currentBid : activeSpot.startingBid)}
-                          </span>
-                        </div>
-                        <div className="text-right">
-                          <span className="text-[12px] text-ink-muted block mb-0.5">Status</span>
-                          {activeSpot.bidCount > 0 ? (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
-                              Taken
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold bg-emerald-50 text-accent-green border border-emerald-200">
-                              🟢 Available
-                            </span>
-                          )}
-                        </div>
-                      </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
 
-                      {/* Spot description */}
-                      <div className="space-y-2 text-[13px] text-ink-muted leading-relaxed">
-                        <p>{activeSpot.description}</p>
-                        <p className="text-[12px] text-ink bg-surface-100 p-2.5 rounded-xl border border-hairline/60">
-                          <strong>Placement note:</strong> {activeSpot.visibilityNote}
-                        </p>
-                      </div>
-
-                      {/* Current Sponsor & Outbid / Claim Button (Stacked Rows) */}
-                      <div className="pt-3 border-t border-hairline space-y-2.5">
-                        {/* Compact Sponsor Pill */}
-                        {activeSpot.bidCount > 0 && activeSpot.topBidder.brand ? (
+          {/* Interactive Spot Quick Action Strip (Below Backpack Canvas) */}
+          {activeSpot && !isCalibrating && (
+            <div className="mt-5 pt-4 border-t border-hairline/80 flex flex-col sm:flex-row items-center justify-between gap-3 px-2">
+              <div className="flex items-center gap-3 text-left">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-surface-200 text-[13px] font-bold text-ink shrink-0 border border-hairline">
+                  {activeSpot.id}
+                </span>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[13.5px] font-semibold text-ink">
+                      {activeSpot.label}
+                    </span>
+                    <span className="text-[11px] font-medium text-ink-muted">
+                      ({activeSpot.dimensions})
+                    </span>
+                  </div>
+                  <div className="text-[12px] text-ink-muted">
+                    {activeSpot.bidCount > 0 ? (
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span>Current top bid: <strong className="text-ink font-semibold tabular-nums">{formatPrice(activeSpot.currentBid)}</strong> by <span className="font-semibold text-ink">{activeSpot.topBidder.brand}</span></span>
+                        {activeSpot.topBidder.twitter && (
                           <a
-                            href={activeSpot.topBidder.url}
+                            href={`https://x.com/${activeSpot.topBidder.twitter.replace(/^@/, '')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full rounded-full bg-surface-100 hover:bg-surface-200 border border-hairline px-4 py-2.5 flex items-center justify-between text-[13px] font-medium text-ink transition-colors group cursor-pointer"
+                            className="inline-flex items-center gap-1 text-[11px] text-ink-subtle hover:text-ink font-medium"
                           >
-                            <div className="flex items-center gap-2.5 min-w-0">
-                              <span className="text-[11px] text-ink-subtle shrink-0">Held by:</span>
-                              {(activeSpot.topBidder.logo || getFaviconFromUrl(activeSpot.topBidder.url)) && (
-                                <img
-                                  src={activeSpot.topBidder.logo || getFaviconFromUrl(activeSpot.topBidder.url)}
-                                  alt={activeSpot.topBidder.brand}
-                                  className="h-5 w-5 rounded object-contain shrink-0"
-                                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                                />
-                              )}
-                              <span className="font-semibold truncate text-ink group-hover:text-cognac">{activeSpot.topBidder.brand}</span>
-                            </div>
-                            <ExternalLink className="h-3.5 w-3.5 text-ink-subtle group-hover:text-cognac shrink-0 ml-2" />
+                            <svg className="h-2.5 w-2.5 fill-current" viewBox="0 0 24 24">
+                              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                            <span>@{activeSpot.topBidder.twitter.replace(/^@/, '')}</span>
                           </a>
-                        ) : (
-                          <div className="w-full rounded-full bg-surface-100 border border-hairline px-4 py-2.5 flex items-center justify-between text-[13px]">
-                            <span className="text-[11px] text-ink-subtle">Spot status:</span>
-                            <span className="text-[12.5px] font-semibold text-accent-green">🟢 Open for bidding</span>
-                          </div>
                         )}
-
-                        {/* Full-width Outbid / Claim Action Button */}
-                        <button
-                          type="button"
-                          onClick={() => onBidSpot(activeSpot)}
-                          className="w-full rounded-full bg-ink py-3 px-5 text-[13.5px] font-semibold text-white transition-all hover:bg-neutral-800 active:scale-[0.99] cursor-pointer shadow-sm flex items-center justify-center gap-2"
-                        >
-                          <span>
-                            {activeSpot.bidCount > 0
-                              ? `Outbid (${formatPrice(activeSpot.currentBid + 10)})`
-                              : `Claim Spot (${formatPrice(activeSpot.startingBid)})`}
-                          </span>
-                          <ArrowUpRight className="h-4 w-4" />
-                        </button>
                       </div>
-                    </>
-                  )}
-
+                    ) : (
+                      <span>Starting price: <strong className="text-emerald-700 font-semibold tabular-nums">{formatPrice(activeSpot.startingBid)}</strong> · <span className="text-emerald-600 font-medium">🟢 Open for bids</span></span>
+                    )}
+                  </div>
                 </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => onBidSpot(activeSpot)}
+                className="w-full sm:w-auto rounded-full bg-ink hover:bg-neutral-800 text-white px-6 py-2.5 text-[13px] font-semibold transition-all cursor-pointer shadow-sm active:scale-[0.99] flex items-center justify-center gap-1.5 shrink-0"
+              >
+                <span>
+                  {activeSpot.bidCount > 0
+                    ? `Outbid (${formatPrice(activeSpot.currentBid + 10)})`
+                    : `Claim Spot (${formatPrice(activeSpot.startingBid)})`}
+                </span>
+                <ArrowUpRight className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+
+        </div>
+
+        <p className="mt-3 text-[12.5px] text-ink-muted text-center">
+          {isCalibrating ? `Calibrating ${viewMode === '2d' ? 'Live Auction' : 'Final Look'} coordinates.` : 'Click any spot on the backpack to place a bid or view spot specs.'}
+        </p>
+
+      </div>
+
+      {/* Calibration Controls Panel (Expands below when isCalibrating is true) */}
+      {canCalibrate && isCalibrating && activeSpot && (
+        <div className="mt-8 mx-auto max-w-2xl bg-white rounded-3xl p-6 border border-hairline shadow-subtle text-left">
+          <div className="space-y-4">
+            
+            <div className="flex items-center justify-between font-semibold text-ink border-b border-hairline pb-3">
+              <span className="flex items-center gap-2 text-sm">
+                <Sliders className="h-4 w-4 text-accent-blue" />
+                <span>Calibrating Spot #{activeSpot.id}: {activeSpot.label}</span>
+              </span>
+              
+              {viewMode === '3d' && (
+                <button
+                  type="button"
+                  onClick={() => handleMatchSpotFrom2D(activeSpot.id)}
+                  className="text-[12px] text-accent-blue font-semibold hover:underline cursor-pointer"
+                >
+                  Match this from 2D
+                </button>
               )}
             </div>
 
-          </div>
+            {/* 2D Position Sliders */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+              <div>
+                <div className="flex justify-between text-ink-muted mb-1">
+                  <span>Top:</span>
+                  <span className="font-mono">{activeSpotCoords.top}</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="90"
+                  step="0.5"
+                  value={parseFloat(activeSpotCoords.top) || 0}
+                  onChange={(e) => {
+                    const val = `${e.target.value}%`;
+                    const coordKey = viewMode === '3d' ? 'coords3d' : 'coords2d';
+                    onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, [coordKey]: { ...getSpotCoords(s), top: val } } : s));
+                  }}
+                  className="w-full accent-accent-blue"
+                />
+              </div>
 
+              <div>
+                <div className="flex justify-between text-ink-muted mb-1">
+                  <span>Left:</span>
+                  <span className="font-mono">{activeSpotCoords.left}</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="90"
+                  step="0.5"
+                  value={parseFloat(activeSpotCoords.left) || 0}
+                  onChange={(e) => {
+                    const val = `${e.target.value}%`;
+                    const coordKey = viewMode === '3d' ? 'coords3d' : 'coords2d';
+                    onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, [coordKey]: { ...getSpotCoords(s), left: val } } : s));
+                  }}
+                  className="w-full accent-accent-blue"
+                />
+              </div>
+
+              <div>
+                <div className="flex justify-between text-ink-muted mb-1">
+                  <span>Width:</span>
+                  <span className="font-mono">{activeSpotCoords.width}</span>
+                </div>
+                <input
+                  type="range"
+                  min="5"
+                  max="80"
+                  step="0.5"
+                  value={parseFloat(activeSpotCoords.width) || 10}
+                  onChange={(e) => {
+                    const val = `${e.target.value}%`;
+                    const coordKey = viewMode === '3d' ? 'coords3d' : 'coords2d';
+                    onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, [coordKey]: { ...getSpotCoords(s), width: val } } : s));
+                  }}
+                  className="w-full accent-accent-blue"
+                />
+              </div>
+
+              <div>
+                <div className="flex justify-between text-ink-muted mb-1">
+                  <span>Height:</span>
+                  <span className="font-mono">{activeSpotCoords.height}</span>
+                </div>
+                <input
+                  type="range"
+                  min="5"
+                  max="60"
+                  step="0.5"
+                  value={parseFloat(activeSpotCoords.height) || 10}
+                  onChange={(e) => {
+                    const val = `${e.target.value}%`;
+                    const coordKey = viewMode === '3d' ? 'coords3d' : 'coords2d';
+                    onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, [coordKey]: { ...getSpotCoords(s), height: val } } : s));
+                  }}
+                  className="w-full accent-accent-blue"
+                />
+              </div>
+            </div>
+
+            {/* 3D Bend & Shear Sliders */}
+            {viewMode === '3d' && (
+              <div className="mt-4 pt-4 border-t border-hairline space-y-3">
+                <div className="flex items-center justify-between font-semibold text-cognac text-xs">
+                  <span className="flex items-center gap-1.5">
+                    <Box className="h-4 w-4" />
+                    <span>3D Angle & Curvature Presets:</span>
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => apply3DPreset('8deg', '-28deg', '2deg', '-4deg', '-4deg')}
+                      className="rounded-lg bg-surface-200 px-2.5 py-1 text-[11px] font-medium text-ink hover:bg-cognac hover:text-white transition-colors cursor-pointer"
+                    >
+                      👈 Left
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => apply3DPreset('8deg', '28deg', '-2deg', '4deg', '4deg')}
+                      className="rounded-lg bg-surface-200 px-2.5 py-1 text-[11px] font-medium text-ink hover:bg-cognac hover:text-white transition-colors cursor-pointer"
+                    >
+                      👉 Right
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => apply3DPreset('18deg', '-8deg', '0deg', '0deg', '-2deg')}
+                      className="rounded-lg bg-surface-200 px-2.5 py-1 text-[11px] font-medium text-ink hover:bg-cognac hover:text-white transition-colors cursor-pointer"
+                    >
+                      👇 Flap
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => apply3DPreset('0deg', '0deg', '0deg', '0deg', '0deg')}
+                      className="rounded-lg bg-surface-200 px-2.5 py-1 text-[11px] font-medium text-ink-subtle hover:text-ink transition-colors cursor-pointer"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs pt-1">
+                  <div>
+                    <div className="flex justify-between text-ink-muted mb-1">
+                      <span>Turn Y:</span>
+                      <span className="font-mono text-cognac font-semibold">{activeSpotCoords.rotateY || '0deg'}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="-65"
+                      max="65"
+                      step="1"
+                      value={parseInt(activeSpotCoords.rotateY || '0', 10)}
+                      onChange={(e) => {
+                        const val = `${e.target.value}deg`;
+                        onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, coords3d: { ...getSpotCoords(s), rotateY: val } } : s));
+                      }}
+                      className="w-full accent-cognac"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between text-ink-muted mb-1">
+                      <span>Tilt X:</span>
+                      <span className="font-mono text-cognac font-semibold">{activeSpotCoords.rotateX || '0deg'}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="-60"
+                      max="60"
+                      step="1"
+                      value={parseInt(activeSpotCoords.rotateX || '0', 10)}
+                      onChange={(e) => {
+                        const val = `${e.target.value}deg`;
+                        onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, coords3d: { ...getSpotCoords(s), rotateX: val } } : s));
+                      }}
+                      className="w-full accent-cognac"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between text-ink-muted mb-1">
+                      <span>Skew X:</span>
+                      <span className="font-mono text-cognac font-semibold">{activeSpotCoords.skewX || '0deg'}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="-45"
+                      max="45"
+                      step="1"
+                      value={parseInt(activeSpotCoords.skewX || '0', 10)}
+                      onChange={(e) => {
+                        const val = `${e.target.value}deg`;
+                        onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, coords3d: { ...getSpotCoords(s), skewX: val } } : s));
+                      }}
+                      className="w-full accent-cognac"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between text-ink-muted mb-1">
+                      <span>Skew Y:</span>
+                      <span className="font-mono text-cognac font-semibold">{activeSpotCoords.skewY || '0deg'}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="-45"
+                      max="45"
+                      step="1"
+                      value={parseInt(activeSpotCoords.skewY || '0', 10)}
+                      onChange={(e) => {
+                        const val = `${e.target.value}deg`;
+                        onUpdateSpots(spots.map(s => s.id === activeSpot.id ? { ...s, coords3d: { ...getSpotCoords(s), skewY: val } } : s));
+                      }}
+                      className="w-full accent-cognac"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </div>
         </div>
-      </div>
+      )}
 
     </div>
   );
 };
+
