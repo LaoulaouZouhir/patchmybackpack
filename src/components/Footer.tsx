@@ -7,15 +7,17 @@ export const Footer: React.FC = () => {
         
         {/* Creator Intro */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-hairline bg-surface-200 text-cognac font-semibold text-[16px]">
-            ZH
-          </div>
+          <img
+            src="/zouhir-avatar.jpg"
+            alt="Zouhir"
+            className="h-14 w-14 shrink-0 rounded-full border border-hairline object-cover shadow-sm"
+          />
 
           <div className="min-w-0">
             <p className="text-[15px] font-semibold text-ink">Hey, I’m Zouhir 👋</p>
             <p className="mt-1.5 max-w-[58ch] text-[13.5px] leading-relaxed text-ink-muted">
               Solo founder building software in public. I am funding my global travels by auctioning patch spots on my everyday leather backpack. Have questions or want a custom arrangement?{' '}
-              <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-cognac hover:underline">
+              <a href="https://x.com/ZouhirLaoulaou" target="_blank" rel="noopener noreferrer" className="text-cognac hover:underline">
                 Find me on X
               </a>{' '}
               or{' '}

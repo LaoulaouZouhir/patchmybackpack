@@ -24,7 +24,7 @@ export const AuctionTable: React.FC<AuctionTableProps> = ({
   };
 
   return (
-    <section id="spots" className="scroll-mt-20 py-20 bg-surface-100/50 border-t border-hairline">
+    <section id="leaderboard" className="scroll-mt-20 py-20 bg-surface-100/50 border-t border-hairline">
       <div className="mx-auto max-w-4xl px-6">
         
         {/* Header */}

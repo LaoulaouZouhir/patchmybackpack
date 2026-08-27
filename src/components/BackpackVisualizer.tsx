@@ -12,6 +12,7 @@ interface BackpackVisualizerProps {
   onResetSpots: () => void;
   currency: 'EUR' | 'USD';
   currencyRate: number;
+  isHighlighted?: boolean;
 }
 
 export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
@@ -23,6 +24,7 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
   onResetSpots,
   currency,
   currencyRate,
+  isHighlighted = false,
 }) => {
   const [viewMode, setViewMode] = useState<'2d' | '3d'>('2d');
   const [hoveredSpotId, setHoveredSpotId] = useState<number | null>(null);
@@ -383,7 +385,11 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
 
       {/* Main Backpack Showcase Stage */}
       <div className="relative mx-auto w-full max-w-[360px] sm:max-w-[440px] md:max-w-[490px] lg:max-w-[530px]">
-        <div className="relative w-full rounded-2xl sm:rounded-3xl bg-gradient-to-b from-surface-100/95 via-surface-100/70 to-surface-200/50 p-2 sm:p-2.5 border border-hairline/90 shadow-[0_15px_40px_-12px_rgba(0,0,0,0.07)]">
+        <div className={`relative w-full rounded-2xl sm:rounded-3xl bg-gradient-to-b from-surface-100/95 via-surface-100/70 to-surface-200/50 p-2 sm:p-2.5 border transition-all duration-500 ${
+          isHighlighted
+            ? 'border-cognac ring-4 ring-cognac/30 shadow-[0_0_35px_rgba(160,82,45,0.22)] scale-[1.02]'
+            : 'border-hairline/90 shadow-[0_15px_40px_-12px_rgba(0,0,0,0.07)]'
+        }`}>
           
           {/* Bag Canvas Container */}
           <div className="relative w-full flex items-center justify-center overflow-hidden rounded-xl">
@@ -590,8 +596,14 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
 
         </div>
 
-        <p className="mt-1.5 text-[11px] sm:text-[11.5px] text-ink-muted text-center">
-          {isCalibrating ? `Calibrating ${viewMode === '2d' ? 'Live Auction' : 'Final Look'} coordinates.` : 'Click any spot on the backpack to place a bid or view spot specs.'}
+        <p className={`mt-1.5 text-[11px] sm:text-[11.5px] text-center transition-all duration-300 ${
+          isHighlighted ? 'text-cognac font-bold animate-pulse' : 'text-ink-muted'
+        }`}>
+          {isCalibrating
+            ? `Calibrating ${viewMode === '2d' ? 'Live Auction' : 'Final Look'} coordinates.`
+            : isHighlighted
+              ? '👇 Click any spot on the backpack below to choose your spot!'
+              : 'Click any spot on the backpack to place a bid or view spot specs.'}
         </p>
 
       </div>

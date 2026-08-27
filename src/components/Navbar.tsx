@@ -6,14 +6,14 @@ import type { User } from '@supabase/supabase-js';
 interface NavbarProps {
   currency: 'EUR' | 'USD';
   setCurrency: (c: 'EUR' | 'USD') => void;
-  onOpenBidModal: () => void;
+  onGetSpot: () => void;
   onOpenAuthModal: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   currency,
   setCurrency,
-  onOpenBidModal,
+  onGetSpot,
   onOpenAuthModal,
 }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -151,7 +151,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Clean Black Rounded Button */}
           <button
             type="button"
-            onClick={onOpenBidModal}
+            onClick={onGetSpot}
             className="rounded-full bg-ink px-4 py-1.5 text-[13px] font-medium text-white transition-opacity hover:opacity-85 cursor-pointer shadow-subtle"
           >
             Get a spot

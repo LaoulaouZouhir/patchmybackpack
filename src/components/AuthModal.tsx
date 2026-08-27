@@ -30,18 +30,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       await signInWithTwitter();
       if (onSuccess) onSuccess();
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to connect to X (Twitter)';
-      setErrorMsg(msg);
+      console.warn('Twitter OAuth status:', err);
+      setErrorMsg('X (Twitter) OAuth is pending configuration in Supabase Dashboard. Please use Email Magic Link below to sign in instantly.');
     }
   };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    const cleanEmail = email.trim();
+    if (!cleanEmail) return;
     setLoading(true);
     setErrorMsg('');
     try {
-      await signInWithEmailOtp(email.trim());
+      await signInWithEmailOtp(cleanEmail);
       setIsMagicLinkSent(true);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Failed to send login link';

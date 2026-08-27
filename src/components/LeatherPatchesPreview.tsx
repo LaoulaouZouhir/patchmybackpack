@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Sparkles, ShieldCheck, Scissors, Eye, Maximize2, X, ArrowUpRight } from 'lucide-react';
 
 interface LeatherPatchesPreviewProps {
+  onGetSpot?: () => void;
   onOpenBidModal?: () => void;
 }
 
-export const LeatherPatchesPreview: React.FC<LeatherPatchesPreviewProps> = ({ onOpenBidModal }) => {
+export const LeatherPatchesPreview: React.FC<LeatherPatchesPreviewProps> = ({ onGetSpot, onOpenBidModal }) => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   const features = [
@@ -138,24 +139,14 @@ export const LeatherPatchesPreview: React.FC<LeatherPatchesPreviewProps> = ({ on
                 </p>
               </div>
 
-              {onOpenBidModal ? (
-                <button
-                  type="button"
-                  onClick={onOpenBidModal}
-                  className="w-full sm:w-auto rounded-full bg-ink hover:bg-neutral-800 text-white px-5 py-2.5 text-[13px] font-semibold transition-all cursor-pointer shadow-sm active:scale-[0.99] flex items-center justify-center gap-1.5 shrink-0"
-                >
-                  <span>Claim a Spot</span>
-                  <ArrowUpRight className="h-4 w-4" />
-                </button>
-              ) : (
-                <a
-                  href="#spots"
-                  className="w-full sm:w-auto rounded-full bg-ink hover:bg-neutral-800 text-white px-5 py-2.5 text-[13px] font-semibold transition-all cursor-pointer shadow-sm active:scale-[0.99] flex items-center justify-center gap-1.5 shrink-0"
-                >
-                  <span>View Spots</span>
-                  <ArrowUpRight className="h-4 w-4" />
-                </a>
-              )}
+              <button
+                type="button"
+                onClick={onGetSpot || onOpenBidModal || (() => document.getElementById('spots')?.scrollIntoView({ behavior: 'smooth', block: 'center' }))}
+                className="w-full sm:w-auto rounded-full bg-ink hover:bg-neutral-800 text-white px-5 py-2.5 text-[13px] font-semibold transition-all cursor-pointer shadow-sm active:scale-[0.99] flex items-center justify-center gap-1.5 shrink-0"
+              >
+                <span>Claim a Spot</span>
+                <ArrowUpRight className="h-4 w-4" />
+              </button>
             </div>
 
           </div>
