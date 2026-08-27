@@ -464,27 +464,29 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                         className={`group absolute flex flex-col items-center justify-center rounded-xl transition-all duration-300 ease-out ${
                           isCalibrating
                             ? isSelected
-                              ? 'border-2 border-accent-blue bg-accent-blue/20 shadow-md cursor-move z-30 ring-2 ring-accent-blue/30'
-                              : 'border-2 border-dashed border-amber-900/60 bg-amber-950/15 cursor-move z-10 hover:border-accent-blue hover:bg-accent-blue/10'
+                              ? 'border-2 border-cognac bg-cognac/20 shadow-md cursor-move z-30 ring-2 ring-cognac/30'
+                              : 'border-2 border-dashed border-amber-900/60 bg-amber-950/15 cursor-move z-10 hover:border-cognac hover:bg-cognac/10'
                             : isSelected || isHovered
-                              ? 'border-2 border-accent-blue bg-white/80 shadow-lg scale-105 z-20 ring-2 ring-accent-blue/20 cursor-pointer overflow-hidden backdrop-blur-[1px]'
+                              ? spot.bidCount > 0
+                                ? 'border-2 border-cognac shadow-lg scale-105 z-20 ring-2 ring-cognac/30 cursor-pointer overflow-hidden'
+                                : 'border-2 border-cognac bg-white/40 shadow-lg scale-105 z-20 ring-2 ring-cognac/20 cursor-pointer overflow-hidden backdrop-blur-[1px]'
                               : spot.bidCount > 0
-                                ? 'border border-solid border-cognac/40 bg-cognac/10 hover:border-accent-blue z-10 cursor-pointer overflow-hidden'
-                                : 'border border-dashed border-ink/30 bg-white/40 hover:border-accent-blue hover:bg-white/70 z-10 cursor-pointer overflow-hidden'
+                                ? 'border border-dashed border-cognac/50 bg-black/5 hover:border-cognac z-10 cursor-pointer overflow-hidden'
+                                : 'border border-dashed border-ink/30 bg-white/30 hover:border-cognac hover:bg-white/50 z-10 cursor-pointer overflow-hidden'
                         }`}
                       >
                         {/* Spot Content */}
                         {spot.bidCount > 0 && spot.topBidder.brand ? (
-                          <div className="flex h-full w-full flex-col items-center justify-center p-1.5 select-none pointer-events-none text-center bg-white/95 rounded-xl shadow-sm border border-cognac/40 overflow-hidden">
+                          <div className="flex h-full w-full flex-col items-center justify-center p-1 select-none pointer-events-none text-center">
                             {(spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)) ? (
                               <div className="flex flex-col items-center justify-center h-full w-full">
                                 <img
                                   src={spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)}
                                   alt={spot.topBidder.brand}
-                                  className="h-7 w-7 sm:h-8 sm:w-8 max-h-[65%] max-w-[75%] object-contain rounded drop-shadow-sm"
+                                  className="h-8 w-8 sm:h-10 sm:w-10 max-h-[72%] max-w-[82%] object-contain drop-shadow-md transition-transform group-hover:scale-105"
                                   onError={(e) => { e.currentTarget.style.display = 'none'; }}
                                 />
-                                <span className="text-[8.5px] sm:text-[9.5px] font-semibold tabular-nums text-cognac mt-0.5 leading-tight">
+                                <span className="text-[8.5px] sm:text-[9.5px] font-semibold tabular-nums text-ink/90 mt-0.5 leading-tight bg-white/70 backdrop-blur-[1px] px-1.5 py-0.5 rounded-md shadow-xs">
                                   {formatPrice(spot.currentBid)}
                                 </span>
                               </div>
