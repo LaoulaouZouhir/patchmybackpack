@@ -164,19 +164,31 @@ export function subscribeToSpotsRealtime(onUpdate: (updatedSpot: Spot) => void) 
    ========================================================================= */
 
 /**
- * Sign in with X / Twitter OAuth
+ * Sign in with X / Twitter OAuth (using X OAuth 2.0 provider)
  */
 export async function signInWithTwitter() {
+  // Supabase uses 'x' for X/Twitter OAuth 2.0
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'twitter',
+    provider: 'x' as any,
     options: {
       redirectTo: window.location.origin,
     },
   });
 
   if (error) {
-    console.error('Error signing in with Twitter:', error);
-    throw error;
+    console.warn('X OAuth 2.0 attempt failed, trying legacy twitter provider:', error);
+    // Fallback to legacy twitter provider if needed
+    const fallback = await supabase.auth.signInWithOAuth({
+      provider: 'twitter',
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+    if (fallback.error) {
+      console.error('Error signing in with Twitter/X:', fallback.error);
+      throw fallback.error;
+    }
+    return fallback.data;
   }
 
   return data;
@@ -218,8 +230,8 @@ export async function signOutUser() {
 export function getUserMetadata(user: User | null) {
   if (!user) return null;
   const meta = user.user_metadata || {};
-  const twitterUsername = meta.user_name || meta.preferred_username || meta.screen_name || '';
-  const avatarUrl = meta.avatar_url || meta.picture || '';
+  const twitterUsername = meta.user_name || meta.preferred_username || meta.screen_name || meta.username || '';
+  const avatarUrl = meta.avatar_url || meta.picture || meta.profile_image_url_https || meta.profile_image_url || '';
   const email = user.email || meta.email || '';
 
   return {
@@ -227,6 +239,6 @@ export function getUserMetadata(user: User | null) {
     email,
     twitterUsername,
     avatarUrl,
-    displayName: meta.full_name || meta.name || twitterUsername || email.split('@')[0],
+    displayName: meta.full_name || meta.name || twitterUsername || email.split('@')[0] || 'Member',
   };
 }
