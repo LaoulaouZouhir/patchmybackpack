@@ -35,6 +35,7 @@ export const Footer: React.FC = () => {
         <div className="mt-10 flex flex-col gap-4 border-t border-hairline pt-6 text-[12px] leading-relaxed text-ink-subtle sm:flex-row sm:items-center sm:justify-between">
           <nav className="flex flex-wrap items-center gap-x-4 gap-y-1">
             <a href="#spots" className="hover:text-ink transition-colors">Live auction</a>
+            <a href="#goal" className="hover:text-ink transition-colors">The goal</a>
             <a href="#proof" className="hover:text-ink transition-colors">Proof of roam</a>
             <a href="#specs" className="hover:text-ink transition-colors">How funds are used</a>
             <a href="#faq" className="hover:text-ink transition-colors">FAQ</a>

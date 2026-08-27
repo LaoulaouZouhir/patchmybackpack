@@ -18,6 +18,7 @@ import { Footer } from './components/Footer';
 import { BidModal } from './components/BidModal';
 import { AuthModal } from './components/AuthModal';
 import { LiveAnalytics } from './components/LiveAnalytics';
+import { TheGoal } from './components/TheGoal';
 
 const STORAGE_KEY = 'buymybackpack_calibrated_spots';
 
@@ -330,6 +331,9 @@ export function App() {
 
       {/* Live Verified Audience & DataFast Analytics */}
       <LiveAnalytics />
+
+      {/* The Honest Goal & Story */}
+      <TheGoal onGetSpot={handleScrollToBackpack} />
 
       {/* Leather Patches Real-World Preview */}
       <LeatherPatchesPreview onGetSpot={handleScrollToBackpack} />
