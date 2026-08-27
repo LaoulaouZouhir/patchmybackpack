@@ -282,15 +282,15 @@ export function App() {
           <button
             type="button"
             onClick={() => setIsBidModalOpen(true)}
-            className="rounded-full bg-accent-blue px-6 py-3 text-[14px] font-medium text-white transition-opacity hover:opacity-90 cursor-pointer shadow-subtle"
+            className="rounded-full bg-ink hover:bg-neutral-800 px-7 py-3 text-[14px] font-semibold text-white transition-all cursor-pointer shadow-md active:scale-[0.99]"
           >
             Get a spot
           </button>
           <a
-            href="#how"
-            className="text-[14px] font-medium text-accent-blue hover:underline"
+            href="#how-it-works"
+            className="text-[14px] font-semibold text-ink-muted hover:text-ink transition-colors inline-flex items-center gap-1"
           >
-            How it works ›
+            How it works &rsaquo;
           </a>
         </div>
 

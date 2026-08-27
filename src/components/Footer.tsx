@@ -15,16 +15,16 @@ export const Footer: React.FC = () => {
             <p className="text-[15px] font-semibold text-ink">Hey, I’m Zouhir 👋</p>
             <p className="mt-1.5 max-w-[58ch] text-[13.5px] leading-relaxed text-ink-muted">
               Solo founder building software in public. I am funding my global travels by auctioning patch spots on my everyday leather backpack. Have questions or want a custom arrangement?{' '}
-              <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-accent-blue hover:underline">
+              <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-cognac hover:underline">
                 Find me on X
               </a>{' '}
               or{' '}
-              <a href="mailto:hello@patchmybackpack.xyz" className="text-accent-blue hover:underline">
+              <a href="mailto:hello@patchmybackpack.xyz" className="text-cognac hover:underline">
                 email me
               </a>.
             </p>
             <p className="mt-2 text-[13px] text-ink-muted">
-              Want to do this with your own gear? <a href="#waitlist" className="text-accent-blue hover:underline">Join the waitlist</a>.
+              Want to do this with your own gear? <a href="#waitlist" className="text-cognac hover:underline">Join the waitlist</a>.
             </p>
           </div>
         </div>

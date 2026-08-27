@@ -50,14 +50,14 @@ export const Waitlist: React.FC = () => {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-hairline bg-white px-4 py-2.5 text-[14px] outline-none transition-shadow placeholder:text-ink-subtle focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/15"
+                  className="w-full rounded-xl border border-hairline bg-white px-4 py-2.5 text-[14px] outline-none transition-shadow placeholder:text-ink-subtle focus:border-cognac focus:ring-2 focus:ring-cognac/15"
                 />
                 <input
                   type="text"
                   placeholder="your X/Twitter handle (optional)"
                   value={twitter}
                   onChange={(e) => setTwitter(e.target.value)}
-                  className="w-full rounded-xl border border-hairline bg-white px-4 py-2.5 text-[14px] outline-none transition-shadow placeholder:text-ink-subtle focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/15"
+                  className="w-full rounded-xl border border-hairline bg-white px-4 py-2.5 text-[14px] outline-none transition-shadow placeholder:text-ink-subtle focus:border-cognac focus:ring-2 focus:ring-cognac/15"
                 />
               </div>
 

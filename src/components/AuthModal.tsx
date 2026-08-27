@@ -134,7 +134,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     placeholder="Enter your email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-2xl border border-hairline bg-white pl-10 pr-4 py-2.5 text-[14px] outline-none transition-shadow focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/15"
+                    className="w-full rounded-2xl border border-hairline bg-white pl-10 pr-4 py-2.5 text-[14px] outline-none transition-shadow focus:border-cognac focus:ring-2 focus:ring-cognac/15"
                   />
                 </div>
 

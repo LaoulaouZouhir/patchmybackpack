@@ -79,9 +79,9 @@ export const ProofOfTravel: React.FC = () => {
           </p>
           <a
             href="#spots"
-            className="font-medium text-accent-blue hover:underline whitespace-nowrap"
+            className="font-semibold text-cognac hover:underline whitespace-nowrap"
           >
-            Claim your patch spot ›
+            Claim your patch spot &rsaquo;
           </a>
         </div>
 
