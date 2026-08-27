@@ -1,7 +1,8 @@
 import React from 'react';
 
 interface HowItWorksProps {
-  onOpenBidModal: () => void;
+  onGetSpot?: () => void;
+  onOpenBidModal?: () => void;
 }
 
 export const HowItWorks: React.FC<HowItWorksProps> = () => {

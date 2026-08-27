@@ -6,7 +6,8 @@ import type { User } from '@supabase/supabase-js';
 interface NavbarProps {
   currency: 'EUR' | 'USD';
   setCurrency: (c: 'EUR' | 'USD') => void;
-  onGetSpot: () => void;
+  onGetSpot?: () => void;
+  onOpenBidModal?: () => void;
   onOpenAuthModal: () => void;
 }
 
@@ -14,8 +15,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   currency,
   setCurrency,
   onGetSpot,
+  onOpenBidModal,
   onOpenAuthModal,
 }) => {
+  const handleOpenBid = onOpenBidModal || onGetSpot || (() => {});
   const [user, setUser] = useState<User | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -151,7 +154,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Clean Black Rounded Button */}
           <button
             type="button"
-            onClick={onGetSpot}
+            onClick={handleOpenBid}
             className="rounded-full bg-ink px-4 py-1.5 text-[13px] font-medium text-white transition-opacity hover:opacity-85 cursor-pointer shadow-subtle"
           >
             Get a spot

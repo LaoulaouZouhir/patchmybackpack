@@ -30,6 +30,18 @@ export function App() {
   const [selectedSpot, setSelectedSpot] = useState<Spot | null>(initialSpots[0]);
   const [isBidModalOpen, setIsBidModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isBackpackHighlighted, setIsBackpackHighlighted] = useState(false);
+
+  const handleScrollToBackpack = () => {
+    const spotsElement = document.getElementById('spots');
+    if (spotsElement) {
+      spotsElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    setIsBackpackHighlighted(true);
+    setTimeout(() => {
+      setIsBackpackHighlighted(false);
+    }, 2200);
+  };
 
   // Time remaining countdown
   const [timeLeft, setTimeLeft] = useState({ days: 11, hours: 14, mins: 32, secs: 40 });
@@ -196,7 +208,7 @@ export function App() {
       <Navbar
         currency={currency}
         setCurrency={setCurrency}
-        onOpenBidModal={() => setIsBidModalOpen(true)}
+        onGetSpot={handleScrollToBackpack}
         onOpenAuthModal={() => setIsAuthModalOpen(true)}
       />
 
@@ -269,6 +281,7 @@ export function App() {
             onResetSpots={handleResetSpots}
             currency={currency}
             currencyRate={campaign.currencyRate}
+            isHighlighted={isBackpackHighlighted}
           />
         </div>
 
@@ -286,7 +299,7 @@ export function App() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <button
             type="button"
-            onClick={() => setIsBidModalOpen(true)}
+            onClick={handleScrollToBackpack}
             className="rounded-full bg-ink hover:bg-neutral-800 px-7 py-3 text-[14px] font-semibold text-white transition-all cursor-pointer shadow-md active:scale-[0.99]"
           >
             Get a spot
@@ -319,7 +332,7 @@ export function App() {
       <LiveAnalytics />
 
       {/* Leather Patches Real-World Preview */}
-      <LeatherPatchesPreview onOpenBidModal={() => setIsBidModalOpen(true)} />
+      <LeatherPatchesPreview onGetSpot={handleScrollToBackpack} />
 
       {/* Why Backpack beats Laptop (Statement section) */}
       <ExposureComparison />
@@ -328,7 +341,7 @@ export function App() {
       <CraftsmanshipSpecs />
 
       {/* 3-Step How it Works */}
-      <HowItWorks onOpenBidModal={() => setIsBidModalOpen(true)} />
+      <HowItWorks onGetSpot={handleScrollToBackpack} />
 
       {/* Nomadic Itinerary */}
       <TravelRoutes />
