@@ -27,7 +27,20 @@ export interface DatabaseSpotRow {
   visibility_note: string;
 }
 
+export const SPOT_STARTING_PRICES: Record<number, number> = {
+  1: 150, // Top Flap: Upper Left ($150)
+  2: 140, // Top Flap: Lower Left ($140)
+  3: 200, // Top Flap: Right Side ($200)
+  4: 120, // Front Pocket: Top Left ($120)
+  5: 120, // Front Pocket: Bottom Right ($120)
+  6: 120, // Front Pocket: Top Right ($120)
+  7: 120, // Front Pocket: Bottom Left ($120)
+};
+
 export function mapRowToSpot(row: DatabaseSpotRow): Spot {
+  const baseStartingPrice = SPOT_STARTING_PRICES[row.id] ?? Number(row.starting_bid);
+  const currentBid = row.bid_count > 0 ? Math.max(baseStartingPrice, Number(row.current_bid)) : baseStartingPrice;
+
   return {
     id: row.id,
     label: row.label,
@@ -35,8 +48,8 @@ export function mapRowToSpot(row: DatabaseSpotRow): Spot {
     zone: row.zone,
     size: row.size,
     dimensions: row.dimensions,
-    startingBid: Number(row.starting_bid),
-    currentBid: Number(row.current_bid),
+    startingBid: baseStartingPrice,
+    currentBid: currentBid,
     bidCount: row.bid_count,
     topBidder: {
       brand: row.top_bidder_brand,

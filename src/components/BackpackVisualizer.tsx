@@ -257,27 +257,27 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
     <div id="spots" className="scroll-mt-24 mx-auto w-full max-w-5xl px-4 sm:px-6">
       
       {/* Top Controls Bar - Centered View Switcher */}
-      <div className="flex items-center justify-center relative mb-6">
+      <div className="flex items-center justify-center relative mb-2 sm:mb-2.5">
         
         {/* Prominent Centered Live Auction vs Final Look Toggle */}
         <div
           role="group"
           aria-label="Backpack view mode toggle"
-          className="flex items-center rounded-2xl bg-surface-200/90 p-1.5 border border-hairline shadow-sm"
+          className="flex items-center rounded-2xl bg-surface-200/90 p-1 border border-hairline shadow-2xs"
         >
           {/* Live Auction Tab */}
           <button
             type="button"
             onClick={() => setViewMode('2d')}
-            className={`flex items-center gap-2 rounded-xl px-5 py-2 text-[13.5px] font-semibold transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 rounded-xl px-3.5 py-1 text-[12.5px] font-semibold transition-all cursor-pointer ${
               viewMode === '2d'
-                ? 'bg-white text-ink shadow-[0_2px_8px_rgba(0,0,0,0.08)]'
+                ? 'bg-white text-ink shadow-[0_2px_6px_rgba(0,0,0,0.08)]'
                 : 'text-ink-muted hover:text-ink hover:bg-white/50'
             }`}
           >
-            <span className="relative flex h-2.5 w-2.5">
+            <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-green opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-green"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-green"></span>
             </span>
             <span>Live Auction</span>
           </button>
@@ -286,13 +286,13 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
           <button
             type="button"
             onClick={() => setViewMode('3d')}
-            className={`flex items-center gap-2 rounded-xl px-5 py-2 text-[13.5px] font-semibold transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 rounded-xl px-3.5 py-1 text-[12.5px] font-semibold transition-all cursor-pointer ${
               viewMode === '3d'
-                ? 'bg-white text-ink shadow-[0_2px_8px_rgba(0,0,0,0.08)]'
+                ? 'bg-white text-ink shadow-[0_2px_6px_rgba(0,0,0,0.08)]'
                 : 'text-ink-muted hover:text-ink hover:bg-white/50'
             }`}
           >
-            <Sparkles className="h-4 w-4 text-cognac" />
+            <Sparkles className="h-3.5 w-3.5 text-cognac" />
             <span>Final Look</span>
           </button>
         </div>
@@ -381,9 +381,9 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
         </div>
       )}
 
-      {/* Main Big Backpack Showcase Stage (Centered, Large Scale inspired by MacBook Preview) */}
-      <div className="relative mx-auto w-full max-w-[620px] sm:max-w-[700px] lg:max-w-[760px] xl:max-w-[800px]">
-        <div className="relative w-full rounded-[2.25rem] sm:rounded-[3rem] bg-gradient-to-b from-surface-100/95 via-surface-100/70 to-surface-200/50 p-4 sm:p-7 md:p-9 border border-hairline/90 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.07)]">
+      {/* Main Backpack Showcase Stage */}
+      <div className="relative mx-auto w-full max-w-[360px] sm:max-w-[440px] md:max-w-[490px] lg:max-w-[530px]">
+        <div className="relative w-full rounded-2xl sm:rounded-3xl bg-gradient-to-b from-surface-100/95 via-surface-100/70 to-surface-200/50 p-2 sm:p-3 border border-hairline/90 shadow-[0_15px_40px_-12px_rgba(0,0,0,0.07)]">
           
           {/* Bag Canvas Container */}
           <div className="relative w-full flex items-center justify-center">
@@ -461,21 +461,21 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                             : 'border-2 border-dashed border-amber-900/70 bg-amber-950/20 cursor-move z-10 hover:border-cognac hover:bg-cognac/15'
                           : isSelected || isHovered
                             ? isTaken
-                              ? 'border-2 border-neutral-900 bg-white shadow-xl scale-105 z-20 ring-4 ring-black/10 cursor-pointer overflow-hidden'
-                              : 'border-2 border-neutral-900 bg-white/80 shadow-xl scale-105 z-20 ring-4 ring-black/10 cursor-pointer overflow-hidden backdrop-blur-xs'
+                              ? 'border-2 border-cognac bg-cognac/15 shadow-xl scale-105 z-20 ring-4 ring-cognac/20 cursor-pointer overflow-hidden backdrop-blur-xs'
+                              : 'border-2 border-cognac bg-cognac/10 shadow-xl scale-105 z-20 ring-4 ring-cognac/20 cursor-pointer overflow-hidden backdrop-blur-xs'
                             : isTaken
-                              ? 'border border-neutral-200/90 bg-white/95 shadow-md hover:border-neutral-900 z-10 cursor-pointer overflow-hidden'
-                              : 'border-2 border-dashed border-neutral-400/60 bg-white/40 hover:border-neutral-800 hover:bg-white/60 z-10 cursor-pointer overflow-hidden backdrop-blur-[2px]'
+                              ? 'border-2 border-cognac/70 bg-black/5 hover:border-cognac z-10 cursor-pointer overflow-hidden'
+                              : 'border-2 border-dashed border-neutral-400/60 bg-black/5 hover:border-neutral-800 hover:bg-black/10 z-10 cursor-pointer overflow-hidden'
                       }`}
                     >
                       {/* Spot Content - Inspired by the clean stickers in the reference photo */}
                       {isTaken ? (
                         <div className="flex h-full w-full flex-col items-center justify-center p-1.5 select-none pointer-events-none text-center">
-                          {(spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)) ? (
+                          {spot.topBidder.logo || (spot.topBidder.url ? getFaviconFromUrl(spot.topBidder.url) : '') ? (
                             <div className="flex flex-col items-center justify-center h-full w-full">
                               <img
                                 src={spot.topBidder.logo || getFaviconFromUrl(spot.topBidder.url)}
-                                alt={spot.topBidder.brand}
+                                alt={spot.topBidder.brand || 'Sponsor'}
                                 className="h-8 w-8 sm:h-11 sm:w-11 md:h-14 md:w-14 max-h-[64%] max-w-[82%] object-contain drop-shadow-xs transition-transform group-hover:scale-105"
                                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
                               />
@@ -486,7 +486,7 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
                           ) : (
                             <div className="flex flex-col items-center justify-center h-full w-full">
                               <span className="text-[11px] sm:text-[13px] md:text-[15px] font-bold text-ink truncate px-1 max-w-full">
-                                {spot.topBidder.brand}
+                                {spot.topBidder.brand || `#${spot.id} Taken`}
                               </span>
                               <span className="text-[9.5px] sm:text-[11px] md:text-[12.5px] font-bold tabular-nums text-neutral-800 mt-1 bg-neutral-100/90 border border-neutral-200/80 px-2 py-0.5 rounded-md">
                                 {formatPrice(spot.currentBid)}
@@ -532,30 +532,30 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
 
           {/* Interactive Spot Quick Action Strip (Below Backpack Canvas) */}
           {activeSpot && !isCalibrating && (
-            <div className="mt-5 pt-4 border-t border-hairline/80 flex flex-col sm:flex-row items-center justify-between gap-3 px-2">
-              <div className="flex items-center gap-3 text-left">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-surface-200 text-[13px] font-bold text-ink shrink-0 border border-hairline">
+            <div className="mt-2.5 pt-2 border-t border-hairline/80 flex flex-col sm:flex-row items-center justify-between gap-2 px-1">
+              <div className="flex items-center gap-2.5 text-left">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-surface-200 text-[12px] font-bold text-ink shrink-0 border border-hairline">
                   {activeSpot.id}
                 </span>
                 <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[13.5px] font-semibold text-ink">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[12.5px] font-semibold text-ink">
                       {activeSpot.label}
                     </span>
-                    <span className="text-[11px] font-medium text-ink-muted">
+                    <span className="text-[10.5px] font-medium text-ink-muted">
                       ({activeSpot.dimensions})
                     </span>
                   </div>
-                  <div className="text-[12px] text-ink-muted">
+                  <div className="text-[11.5px] text-ink-muted">
                     {activeSpot.bidCount > 0 ? (
-                      <div className="flex items-center gap-2 flex-wrap">
+                      <div className="flex items-center gap-1.5 flex-wrap">
                         <span>Current top bid: <strong className="text-ink font-semibold tabular-nums">{formatPrice(activeSpot.currentBid)}</strong> by <span className="font-semibold text-ink">{activeSpot.topBidder.brand}</span></span>
                         {activeSpot.topBidder.twitter && (
                           <a
                             href={`https://x.com/${activeSpot.topBidder.twitter.replace(/^@/, '')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-[11px] text-ink-subtle hover:text-ink font-medium"
+                            className="inline-flex items-center gap-1 text-[10.5px] text-ink-subtle hover:text-ink font-medium"
                           >
                             <svg className="h-2.5 w-2.5 fill-current" viewBox="0 0 24 24">
                               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -574,21 +574,21 @@ export const BackpackVisualizer: React.FC<BackpackVisualizerProps> = ({
               <button
                 type="button"
                 onClick={() => onBidSpot(activeSpot)}
-                className="w-full sm:w-auto rounded-full bg-ink hover:bg-neutral-800 text-white px-6 py-2.5 text-[13px] font-semibold transition-all cursor-pointer shadow-sm active:scale-[0.99] flex items-center justify-center gap-1.5 shrink-0"
+                className="w-full sm:w-auto rounded-full bg-ink hover:bg-neutral-800 text-white px-4 py-1.5 text-[12px] font-semibold transition-all cursor-pointer shadow-xs active:scale-[0.99] flex items-center justify-center gap-1 shrink-0"
               >
                 <span>
                   {activeSpot.bidCount > 0
                     ? `Outbid (${formatPrice(activeSpot.currentBid + 10)})`
                     : `Claim Spot (${formatPrice(activeSpot.startingBid)})`}
                 </span>
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight className="h-3.5 w-3.5" />
               </button>
             </div>
           )}
 
         </div>
 
-        <p className="mt-3 text-[12.5px] text-ink-muted text-center">
+        <p className="mt-1.5 text-[11px] sm:text-[11.5px] text-ink-muted text-center">
           {isCalibrating ? `Calibrating ${viewMode === '2d' ? 'Live Auction' : 'Final Look'} coordinates.` : 'Click any spot on the backpack to place a bid or view spot specs.'}
         </p>
 

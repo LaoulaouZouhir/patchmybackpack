@@ -200,10 +200,10 @@ export function App() {
       />
 
       {/* Hero Section */}
-      <header className="mx-auto max-w-6xl px-4 sm:px-6 pt-14 pb-14 text-center md:pt-18">
+      <header className="mx-auto max-w-5xl px-4 sm:px-6 pt-2 sm:pt-3 pb-4 text-center">
         
-        {/* Live Auction Spots Taken Pill (Inspired directly by reference image) */}
-        <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3.5 py-1.5 text-[12.5px] font-medium text-emerald-800 border border-emerald-200/80 shadow-2xs mb-4">
+        {/* Live Auction Spots Taken Pill */}
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-0.5 text-[11px] sm:text-[11.5px] font-medium text-emerald-800 border border-emerald-200/80 shadow-2xs mb-1.5 sm:mb-2">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -212,25 +212,25 @@ export function App() {
         </div>
 
         {/* Hero Title */}
-        <h1 className="mt-1 text-[clamp(2.5rem,5.5vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
+        <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-bold leading-tight tracking-[-0.03em] text-ink">
           Your brand, on my Backpack.
         </h1>
 
         {/* Subtitle */}
-        <p className="mx-auto mt-4 max-w-[60ch] text-[15px] leading-relaxed text-ink-muted sm:text-[17.5px]">
+        <p className="mx-auto mt-1 max-w-[55ch] text-[13px] sm:text-[14.5px] leading-snug text-ink-muted">
           Your logo travels with me on a founder's best friend: the Nomad Leather Backpack.
         </p>
 
-        {/* Funding Progress Widget - Bold, Clean & Inspired by Reference Image */}
-        <div className="mx-auto mt-7 max-w-lg px-2">
+        {/* Funding Progress Widget */}
+        <div className="mx-auto mt-2 sm:mt-2.5 max-w-sm px-2">
           
           {/* Metric Stats Header */}
-          <div className="flex items-baseline justify-between px-1 mb-2">
-            <span className="text-xl sm:text-2xl font-bold tabular-nums text-emerald-600">
+          <div className="flex items-baseline justify-between px-1 mb-1">
+            <span className="text-base sm:text-lg font-bold tabular-nums text-emerald-600">
               {formatPrice(campaign.totalRaised)}{' '}
-              <span className="text-[13px] font-normal text-ink-muted">raised</span>
+              <span className="text-[11.5px] font-normal text-ink-muted">raised</span>
             </span>
-            <span className="text-[13px] font-medium text-ink-muted">
+            <span className="text-[11px] sm:text-[12px] font-medium text-ink-muted">
               goal {formatPrice(campaign.targetAmount)} ({percentageFunded}%)
             </span>
           </div>
@@ -241,7 +241,7 @@ export function App() {
             aria-valuenow={percentageFunded}
             aria-valuemin={0}
             aria-valuemax={100}
-            className="h-2.5 w-full overflow-hidden rounded-full bg-surface-200 border border-hairline shadow-inner p-0.5"
+            className="h-2 w-full overflow-hidden rounded-full bg-surface-200 border border-hairline shadow-inner p-0.5"
           >
             <div
               className="h-full rounded-full bg-emerald-500 shadow-sm transition-all duration-700"
@@ -249,13 +249,13 @@ export function App() {
             ></div>
           </div>
 
-          <p className="mt-2.5 text-[12px] sm:text-[12.5px] text-ink-muted">
+          <p className="mt-1 text-[10.5px] sm:text-[11.5px] text-ink-muted">
             Auction ends in {timeLeft.days}d {timeLeft.hours}h {timeLeft.mins}m · outbid any spot before time runs out
           </p>
         </div>
 
         {/* Interactive Backpack Hotspots Canvas */}
-        <div className="mt-8">
+        <div className="mt-2.5 sm:mt-3">
           <BackpackVisualizer
             spots={spots}
             selectedSpotId={selectedSpot?.id || null}

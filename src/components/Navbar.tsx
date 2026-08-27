@@ -53,6 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="hidden items-center gap-6 text-[13px] font-medium text-ink-muted md:flex">
           <a href="#spots" className="transition-colors hover:text-ink">Live auction</a>
           <a href="#proof" className="transition-colors hover:text-ink">Proof of roam</a>
+          <a href="#leather-preview" className="transition-colors hover:text-ink">Patch preview</a>
           <a href="#impact" className="transition-colors hover:text-ink">Why it works</a>
           <a href="#specs" className="transition-colors hover:text-ink">How funds are used</a>
           <a href="#how" className="transition-colors hover:text-ink">How it works</a>
