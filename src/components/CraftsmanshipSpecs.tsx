@@ -11,7 +11,7 @@ export const CraftsmanshipSpecs: React.FC = () => {
           What will I do with the money?
         </h2>
         <p className="mt-2 text-[14px] text-ink-muted">
-          Every euro raised funds my upcoming travel transit, tech events, and custom patch production.
+          Every dollar raised funds my upcoming travel transit, tech events, and custom patch production.
         </p>
 
         {/* Structured Breakdown Card */}
